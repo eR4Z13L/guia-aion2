@@ -1,0 +1,23 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Início · Guia Aion 2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>body{margin:0;background:#0f0f17;color:#e8e8f0;font:16px/1.55 'Barlow',system-ui,sans-serif}main{max-width:860px;margin:0 auto;padding:22px 16px 60px}
+h1,h2{font-family:'Chakra Petch',system-ui,sans-serif;line-height:1.2}h1{font-size:1.8rem;margin:.2em 0 .1em}h2{font-size:1.2rem;margin:0 0 8px}
+.sub{color:#9a9ab0;margin:0 0 18px}.card{background:#171722;border:1px solid #2a2a3a;border-radius:12px;padding:16px 18px;margin:14px 0}
+ul{margin:6px 0 0;padding-left:20px;display:grid;gap:5px}a{color:#9ec5ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card a.big{display:block;font-weight:600;text-decoration:none;color:#fff;padding:6px 0}.m{color:#9a9ab0;font-size:.9rem}</style></head><body>
+<style>
+.snav{position:sticky;top:0;z-index:60;display:flex;gap:4px;align-items:center;flex-wrap:wrap;padding:8px 14px;background:#0b0b12;border-bottom:1px solid #2a2a3a;font:500 14px 'Barlow',system-ui,sans-serif}
+.snav a,.snav button{font:inherit;color:#e8e8f0;background:none;border:0;padding:7px 12px;border-radius:8px;cursor:pointer;text-decoration:none}
+.snav a:hover,.snav button:hover{background:#1c1c2a}.snav .on{background:#23233a;color:#fff}
+.snav .brand{font-weight:700;letter-spacing:.02em;margin-right:8px}
+.snav .dd{position:relative}.snav .ddp{position:absolute;left:0;top:100%;min-width:200px;background:#12121c;border:1px solid #2a2a3a;border-radius:10px;padding:6px;display:grid;gap:2px;box-shadow:0 8px 24px #0009}
+.snav .ddp[hidden],.snav .bl[hidden]{display:none}.snav .cls{width:100%;text-align:left}
+.snav .bl{display:grid;padding-left:14px}.snav .bl a{color:#c9c9dc}
+@media(max-width:560px){.snav{padding:6px 8px}.snav a,.snav button{padding:6px 8px}}
+</style><nav class="snav"><a class="brand" href="index.html">Guia Aion 2</a><div class="dd"><button type="button" id="snC">Guias das classes ▾</button><div class="ddp" hidden><button type="button" class="cls">Assassino ▸</button><div class="bl" hidden><a href="guia-assassino-pve.html">PvE</a><a href="guia-assassino-pvp.html">PvP</a></div><button type="button" class="cls">Templar ▸</button><div class="bl" hidden><a href="guia-templar-pve.html">PvE</a></div></div></div><a href="geral.html">Guia geral</a><a href="mapa.html">Mapa</a><a href="dicas.html">Dicas</a><a href="ferramentas.html">Ferramentas</a></nav><script>(()=>{const c=document.getElementById("snC"),p=c.nextElementSibling;c.onclick=e=>{e.stopPropagation();p.hidden=!p.hidden};p.querySelectorAll(".cls").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=b.nextElementSibling;const o=l.hidden;p.querySelectorAll(".bl").forEach(x=>x.hidden=true);l.hidden=!o});document.addEventListener("click",()=>{p.hidden=true});const on=p.querySelector(".bl a.on");if(on){on.parentNode.hidden=false}})();</script>
+<main><h1>Guia Aion 2</h1><p class="sub">Guias de classe, mapa de farm e dicas para o Altgard. Abra as páginas pelo menu no topo.</p>
+<h2>Guias das classes</h2><div class="grid"><div class="card"><h2>Assassino</h2><a class="big" href="guia-assassino-pve.html">PvE →</a><a class="big" href="guia-assassino-pvp.html">PvP →</a></div><div class="card"><h2>Templar</h2><a class="big" href="guia-templar-pve.html">PvE →</a></div></div>
+<div class="grid"><div class="card"><h2>Guia geral</h2><p class="m">Subir skills, poções e Alquimia, cubos.</p><a class="big" href="geral.html">Abrir →</a></div>
+<div class="card"><h2>Mapa</h2><p class="m">Cubos, ervas, teleportes e comerciantes.</p><a class="big" href="mapa.html">Abrir →</a></div>
+<div class="card"><h2>Dicas</h2><p class="m">Onde mais gente trava e o que pouca gente sabe.</p><a class="big" href="dicas.html">Abrir →</a></div>
+<div class="card"><h2>Ferramentas</h2><p class="m">Calculadoras e relógios.</p><a class="big" href="ferramentas.html">Abrir →</a></div></div></main></body></html>
