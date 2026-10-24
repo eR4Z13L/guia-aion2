@@ -1,4 +1,4 @@
-<meta charset="utf-8"><style>[data-tab=dicas],[data-tab=mapa],[data-tab=ferramentas]{display:none!important}</style><script>try{for(const k in localStorage)if(/:tab$/.test(k)&&/^(dicas|mapa|ferramentas)$/.test(localStorage[k]))localStorage[k]='resumo'}catch(e){}</script><title>Guia do Templar</title>
+<meta charset="utf-8"><style>[data-tab=dicas],[data-tab=mapa],[data-tab=ferramentas]{display:none!important}</style><script>try{for(const k in localStorage)if(/:tab$/.test(k)&&/^(dicas|mapa|ferramentas)$/.test(localStorage[k]))localStorage[k]='resumo'}catch(e){}</script><script>window.MF_ICONS={"alq": "assets/icons/alq.webp", "azpha": "assets/icons/azpha.webp", "calen": "assets/icons/calen.webp", "cubos": "assets/icons/cubos.webp", "lojas": "assets/icons/lojas.webp", "morfa": "assets/icons/morfa.webp", "odyle": "assets/icons/odyle.webp", "pujery": "assets/icons/pujery.webp", "raydam": "assets/icons/raydam.webp", "spots": "assets/icons/spots.webp", "tele": "assets/icons/tele.webp"}</script><title>Guia do Templar</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -831,6 +831,10 @@ button{cursor:pointer}
   const el = (n, a) => { const e = document.createElementNS(NS, n); for (const x in a) e.setAttribute(x, a[x]); return e; };
   const groups = {}, marks = [];
   const layG = el('g', {}), lblG = el('g', {}); svg.append(layG, lblG);
+  const IC = window.MF_ICONS || {};
+  const icoMark = (L, small) => { const g = el('g', {}), r = small ? 7 : 13;
+    g.append(el('circle', { r: r, fill: '#000a', stroke: L.id === 'alq' ? '#ff5c8a' : L.cor, 'stroke-width': L.id === 'alq' ? 3 : 1.5 }));
+    g.append(el('image', { href: IC[L.id], x: -r + 2, y: -r + 2, width: 2 * r - 4, height: 2 * r - 4 })); return g; };
   const shape = (f, c) => f === 'q' ? el('rect', { x: -6, y: -6, width: 12, height: 12, fill: c, stroke: '#000', 'stroke-width': 1.5 })
     : f === 'd' ? el('polygon', { points: '0,-8 7,0 0,8 -7,0', fill: c, stroke: '#000', 'stroke-width': 1.5 })
     : el('circle', { r: f === 's' ? 3 : 4.5, fill: c, stroke: '#000', 'stroke-width': 1 });
@@ -839,7 +843,7 @@ button{cursor:pointer}
     const small = L.id === 'spots';
     L.pts.forEach((p, i) => {
       const m = el('g', { 'data-l': li, 'data-i': i });
-      if (small) m.append(shape('s', L.cor)); else m.append(shape(L.forma, L.cor));
+      if (IC[L.id]) m.append(icoMark(L, small)); else if (small) m.append(shape('s', L.cor)); else m.append(shape(L.forma, L.cor));
       m.append(el('circle', { r: 11, fill: 'transparent' }));
       m.dataset.x = p[0]; m.dataset.y = p[1]; g.append(m); marks.push(m);
     });
@@ -858,7 +862,7 @@ button{cursor:pointer}
   D.layers.forEach(L => {
     if (L.grupo !== last) { last = L.grupo; const s = document.createElement('span'); s.className = 'mf-grp'; s.textContent = L.grupo; chips.append(s); }
     const b = document.createElement('button'); b.type = 'button'; b.className = 'mf-chip'; b.style.setProperty('--c', L.cor);
-    b.setAttribute('aria-pressed', L.on ? 'true' : 'false'); b.innerHTML = '<i></i>' + L.nome + ' <small>' + L.pts.length + '</small>';
+    b.setAttribute('aria-pressed', L.on ? 'true' : 'false'); b.innerHTML = (IC[L.id] ? '<img src="' + IC[L.id] + '" alt="" width="18" height="18" style="border-radius:50%">' : '<i></i>') + L.nome + ' <small>' + L.pts.length + '</small>';
     b.onclick = () => { const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); groups[L.id].style.display = on ? '' : 'none'; if (on) scaleMarks(); };
     chips.append(b);
   });
