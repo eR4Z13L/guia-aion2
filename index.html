@@ -33,12 +33,80 @@ ul{margin:6px 0 0;padding-left:20px;display:grid;gap:6px}a{color:#9ec5ff}.m{colo
 .snav .bl a:hover,.snav .bl a.on{background:#a47cff33;color:#fff}
 @media(max-width:560px){.snav{padding:0 8px;min-height:46px;font-size:14px}.snav .dd{position:static}.snav a,.snav button{padding:8px 9px}.snav .brand span{display:none}.snav .ddp{left:8px;right:8px}}
 </style><nav class="snav"><a class="brand" href="index.html"><i></i><span>Guia Aion 2</span></a><div class="dd"><button type="button" id="snC">Guias das classes ▾</button><div class="ddp" hidden><button type="button" class="cls">Assassino</button><div class="bl" hidden><a href="guia-assassino-pve.html">PvE</a><a href="guia-assassino-pvp.html">PvP</a></div><button type="button" class="cls">Templar</button><div class="bl" hidden><a href="guia-templar-pve.html">PvE</a></div></div></div><a href="geral.html">Guia geral</a><a href="tarefas.html">Tarefas</a><a href="mapa.html">Mapa</a><a href="dicas.html">Dicas</a><a href="ferramentas.html">Ferramentas</a></nav><script>(()=>{const c=document.getElementById("snC"),p=c.nextElementSibling;c.onclick=e=>{e.stopPropagation();p.hidden=!p.hidden};p.querySelectorAll(".cls").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=b.nextElementSibling;const o=l.hidden;p.querySelectorAll(".bl").forEach(x=>x.hidden=true);l.hidden=!o;p.querySelectorAll(".cls").forEach(x=>x.classList.remove("open"));if(o)b.classList.add("open")});document.addEventListener("click",()=>{p.hidden=true});document.addEventListener("keydown",e=>{if(e.key=="Escape")p.hidden=true});const on=p.querySelector(".bl a.on");if(on){on.parentNode.hidden=false;on.parentNode.previousElementSibling.classList.add("open")}})();</script>
-<main><div class="hero"><h1>Guia Aion 2</h1><p>Guias de classe, mapa de farm e dicas para o Altgard. Tudo em um lugar só.</p>
-<div class="ctas"><a class="btn" href="mapa.html">Abrir o mapa</a><a class="btn alt" href="geral.html">Guia geral</a></div></div>
-<div class="sec">Guias das classes</div><div class="grid"><div class="card"><h2>Assassino</h2><div class="chips"><a class="chip" href="guia-assassino-pve.html">PvE</a><a class="chip" href="guia-assassino-pvp.html">PvP</a></div></div><div class="card"><h2>Templar</h2><div class="chips"><a class="chip" href="guia-templar-pve.html">PvE</a></div></div></div>
-<div class="sec">Mais</div><div class="grid">
-<a class="card" href="geral.html"><h2>Guia geral</h2><p class="m">Subir skills, poções e Alquimia, cubos.</p></a>
-<a class="card" href="tarefas.html"><h2>Tarefas</h2><p class="m">O que fazer todo dia e toda semana, com reset e contagem.</p></a>
-<a class="card" href="mapa.html"><h2>Mapa</h2><p class="m">Cubos, ervas, teleportes e comerciantes.</p></a>
-<a class="card" href="dicas.html"><h2>Dicas</h2><p class="m">Onde mais gente trava e o que pouca gente sabe.</p></a>
-<a class="card" href="ferramentas.html"><h2>Ferramentas</h2><p class="m">Calculadoras e relógios.</p></a></div></main></body></html>
+<main><style>
+.ix-hero{position:relative;overflow:hidden;background:radial-gradient(900px 300px at 85% -20%,#3a2a6b66,transparent),linear-gradient(120deg,#1d1730,var(--panel) 65%);border:1px solid var(--line);border-radius:18px;padding:30px 26px;margin-bottom:18px}
+.ix-hero h1{font-size:2.3rem}.ix-hero p{color:var(--muted);margin:8px 0 0;max-width:58ch}
+.ix-stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px}
+.ix-stats div{min-width:84px}.ix-stats b{display:block;font:700 1.7rem 'Chakra Petch',sans-serif;color:#fff;line-height:1}.ix-stats span{font-size:.78rem;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.ix-hoje{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:6px}
+.ix-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.ix-box small{display:block;color:var(--muted);font:600 .74rem 'Chakra Petch',sans-serif;letter-spacing:.09em;text-transform:uppercase}
+.ix-box b{display:block;font:700 1.45rem 'Chakra Petch',sans-serif;color:#fff;margin:2px 0 6px;font-variant-numeric:tabular-nums}
+.ix-bar{height:6px;border-radius:99px;background:var(--panel2);overflow:hidden}.ix-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--gold))}
+.ix-box a{font-size:.88rem}
+.ix-tool{position:relative;display:flex;flex-direction:column;gap:6px;min-height:128px}
+.ix-tool h2{display:flex;align-items:center;gap:8px;margin:0}.ix-tool h2:after{display:none}
+.ix-tool .ic{font-size:1.4rem;line-height:1}
+.ix-tool .tag{position:absolute;top:12px;right:12px;font:700 .66rem 'Chakra Petch',sans-serif;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:#a47cff22;color:var(--vi);border:1px solid #a47cff55}
+.ix-tool .tag.new{background:#e6b45c22;color:var(--gold);border-color:#e6b45c66}
+.ix-maps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.ix-map{display:block;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;text-decoration:none;color:#fff;background:#000}
+.ix-map img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s,opacity .2s;opacity:.85}
+.ix-map:hover img{transform:scale(1.06);opacity:1}.ix-map:hover{border-color:var(--violet)}
+.ix-map span{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;background:linear-gradient(transparent,#000c);font:700 1rem 'Chakra Petch',sans-serif}
+.ix-map small{display:block;font:500 .78rem 'Barlow',sans-serif;color:#cfd3de}
+.ix-cls{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.ix-cls .card h2{display:flex;align-items:center;gap:10px}
+.ix-cls .card h2 span{width:34px;height:34px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);display:grid;place-items:center;color:var(--vi);font-size:1rem}
+.ix-soon{opacity:.6;border-style:dashed}
+</style>
+<div class="ix-hero"><h1>Guia Aion 2</h1>
+<p>Guias de classe, mapas de farm, tarefas diárias e semanais e ferramentas. Tudo em um lugar só, em português.</p>
+<div class="ctas" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><a class="btn" href="tarefas.html">Minhas tarefas de hoje</a><a class="btn alt" href="mapa.html">Abrir o mapa</a></div>
+<div class="ix-stats"><div><b>5</b><span>mapas</span></div><div><b>154</b><span>cubos escondidos</span></div><div><b>745</b><span>monstros</span></div><div><b>157</b><span>pets</span></div></div></div>
+
+<div class="sec">Hoje</div>
+<div class="ix-hoje">
+<div class="ix-box"><small>Reset diário em</small><b id="ixD">--:--:--</b><div class="ix-bar"><i id="ixDb"></i></div><div class="m" id="ixDp" style="margin-top:6px"></div></div>
+<div class="ix-box"><small>Reset semanal em</small><b id="ixW">--</b><div class="ix-bar"><i id="ixWb"></i></div><div class="m" id="ixWp" style="margin-top:6px"></div></div>
+<div class="ix-box"><small>Próximo Shugo Festival</small><b id="ixS">--:--</b><a href="tarefas.html">Ver todos os eventos →</a></div>
+</div>
+
+<div class="sec">Ferramentas</div>
+<div class="grid">
+<a class="card ix-tool" href="tarefas.html"><span class="tag new">Novo</span><h2><span class="ic">✅</span>Tarefas</h2><p class="m">Checklist diário e semanal com reset e contadores.</p></a>
+<a class="card ix-tool" href="mapa.html"><h2><span class="ic">🗺️</span>Mapa interativo</h2><p class="m">5 mapas com cubos, ervas, minérios, teleportes, chefes e pets.</p></a>
+<a class="card ix-tool" href="mapa.html"><span class="tag new">Novo</span><h2><span class="ic">🧭</span>Rotas de farm</h2><p class="m">Misture cubo, erva e minério e deixe o site sugerir a rota.</p></a>
+<a class="card ix-tool" href="ferramentas.html"><h2><span class="ic">🧮</span>Calculadoras</h2><p class="m">Melhoria de equipamento, relógios e contas rápidas.</p></a>
+<a class="card ix-tool" href="geral.html"><h2><span class="ic">📘</span>Guia geral</h2><p class="m">Subir skills, poções e Alquimia, cubos escondidos.</p></a>
+<a class="card ix-tool" href="dicas.html"><h2><span class="ic">💡</span>Dicas</h2><p class="m">Onde mais gente trava e o que pouca gente sabe.</p></a>
+</div>
+
+<div class="sec">Mapas</div>
+<div class="ix-maps"><a class="ix-map" href="mapa.html?m=altgard"><img loading="lazy" src="assets/maps/altgard-thumb.jpg" alt=""><span>Altgard<small>Abrir no mapa</small></span></a><a class="ix-map" href="mapa.html?m=verteron"><img loading="lazy" src="assets/maps/verteron-thumb.jpg" alt=""><span>Verteron<small>Abrir no mapa</small></span></a><a class="ix-map" href="mapa.html?m=poeta"><img loading="lazy" src="assets/maps/poeta-thumb.jpg" alt=""><span>Poeta<small>Abrir no mapa</small></span></a><a class="ix-map" href="mapa.html?m=ishalgen"><img loading="lazy" src="assets/maps/ishalgen-thumb.jpg" alt=""><span>Ishalgen<small>Abrir no mapa</small></span></a><a class="ix-map" href="mapa.html?m=lower-reshanta"><img loading="lazy" src="assets/maps/lower-reshanta-thumb.jpg" alt=""><span>Lower Reshanta<small>Abrir no mapa</small></span></a></div>
+
+<div class="sec">Guias das classes</div>
+<div class="ix-cls"><div class="card"><h2><span>🗡️</span>Assassino</h2><div class="chips"><a class="chip" href="guia-assassino-pve.html">PvE</a><a class="chip" href="guia-assassino-pvp.html">PvP</a></div></div><div class="card"><h2><span>🛡️</span>Templar</h2><div class="chips"><a class="chip" href="guia-templar-pve.html">PvE</a></div></div>
+<div class="card ix-soon"><h2><span>＋</span>Mais classes</h2><p class="m">Outras classes entram aos poucos.</p></div></div>
+
+<p class="m" style="margin-top:28px">Dados: allthings.how, aion2pets.app, wikily.gg e AION2 Hub. Arte e ícones © NCSOFT. Site de fã, não oficial.</p>
+<script>
+(() => {
+  const H = 7, $ = id => document.getElementById(id), pad = n => String(n).padStart(2, '0');
+  const hms = ms => { const s = Math.max(0, Math.floor(ms / 1000)); return pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s % 3600 / 60)) + ':' + pad(s % 60); };
+  const gday = () => new Date(Date.now() - H * 3600e3), dayKey = () => gday().toISOString().slice(0, 10);
+  const weekKey = () => { const x = gday(); x.setUTCDate(x.getUTCDate() - (x.getUTCDay() - 3 + 7) % 7); return x.toISOString().slice(0, 10); };
+  let R = {}; try { R = JSON.parse(localStorage.getItem('tarefas:resumo') || '{}'); } catch (e) {}
+  const dp = R.d === dayKey() ? R.dp || 0 : 0, wp = R.w === weekKey() ? R.wp || 0 : 0;
+  $('ixDb').style.width = dp + '%'; $('ixWb').style.width = wp + '%'; $('ixDp').textContent = dp + '% das tarefas do dia'; $('ixWp').textContent = wp + '% das tarefas da semana';
+  const tick = () => {
+    const now = new Date(), d = new Date(now); d.setUTCHours(H, 0, 0, 0); if (d <= now) d.setUTCDate(d.getUTCDate() + 1);
+    const w = new Date(d); while (w.getUTCDay() !== 3) w.setUTCDate(w.getUTCDate() + 1);
+    const dias = Math.floor((w - now) / 864e5), resto = (w - now) - dias * 864e5;
+    $('ixD').textContent = hms(d - now); $('ixW').textContent = dias + 'd ' + hms(resto).slice(0, 5).replace(':', 'h ') + 'min';
+    const x = new Date(now); x.setUTCMinutes(0, 0, 0); x.setUTCHours(x.getUTCHours() + 1); $('ixS').textContent = 'em ' + hms(x - now).slice(3);
+  };
+  tick(); setInterval(tick, 1000);
+})();
+</script>
+</main></body></html>

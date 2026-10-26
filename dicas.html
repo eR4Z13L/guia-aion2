@@ -1280,6 +1280,8 @@ button{cursor:pointer}
     document.head.append(sc);
   };
   boot(MAPS.altgard, 'altgard');
+  const q = new URLSearchParams(location.search).get('m');                    // mapa.html?m=verteron abre direto naquele mapa
+  if (q && q !== 'altgard' && (window.MF_MAPLIST || []).some(x => x[0] === q)) abrir(q, 'altgard');
 })();
 </script>
 <!--/MAPAFARM-->

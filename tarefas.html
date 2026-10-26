@@ -145,7 +145,7 @@ ul{margin:6px 0 0;padding-left:20px;display:grid;gap:6px}a{color:#9ec5ff}.m{colo
   const dayKey = () => gday().toISOString().slice(0, 10);
   const weekKey = () => { const x = gday(); x.setUTCDate(x.getUTCDate() - (x.getUTCDay() - 3 + 7) % 7); return x.toISOString().slice(0, 10); };
   const rolar = () => { if (S.d !== dayKey()) { S.d = dayKey(); S.daily = {}; } if (S.w !== weekKey()) { S.w = weekKey(); S.weekly = {}; } };
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); localStorage.setItem('tarefas:resumo', JSON.stringify({d: S.d, w: S.w, dp: prog(DAILY), wp: prog(WEEKLY)})); } catch (e) {} };
   const bloq = it => (it.lvl && S.lvl < it.lvl) ? 'Libera no nível ' + it.lvl : (it.il && (!S.il || S.il < it.il)) ? 'Precisa de item level ' + it.il : '';
   const feito = (it, st) => (st[it.id] || 0) >= (it.n || 1);
   const draw = (box, list, st, cnt) => {
