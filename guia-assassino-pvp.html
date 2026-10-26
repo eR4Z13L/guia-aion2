@@ -1,4 +1,4 @@
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>[data-tab=dicas],[data-tab=mapa],[data-tab=ferramentas]{display:none!important}</style><script>try{for(const k in localStorage)if(/:tab$/.test(k)&&/^(dicas|mapa|ferramentas)$/.test(localStorage[k]))localStorage[k]='resumo'}catch(e){}</script><style>.snav{margin:-20px -16px 18px}</style><script>window.MF_ICONS={"alq": "assets/icons/alq.webp", "azpha": "assets/icons/azpha.webp", "calen": "assets/icons/calen.webp", "cubos": "assets/icons/cubos.webp", "lojas": "assets/icons/lojas.webp", "morfa": "assets/icons/morfa.webp", "odyle": "assets/icons/odyle.webp", "pujery": "assets/icons/pujery.webp", "raydam": "assets/icons/raydam.webp", "spots": "assets/icons/spots.webp", "tele": "assets/icons/tele.webp"}</script><script>window.MF_PETS_DIR='assets/pets/'</script><title>Guia do Assassino (PvP)</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>[data-tab=dicas],[data-tab=mapa],[data-tab=ferramentas]{display:none!important}</style><script>try{for(const k in localStorage)if(/:tab$/.test(k)&&/^(dicas|mapa|ferramentas)$/.test(localStorage[k]))localStorage[k]='resumo'}catch(e){}</script><style>.snav{margin:-20px -16px 18px}</style><script>window.MF_ICONS={"alq": "assets/icons/alq.webp", "azpha": "assets/icons/azpha.webp", "calen": "assets/icons/calen.webp", "cubos": "assets/icons/cubos.webp", "fenda": "assets/icons/fenda.webp", "g-aria": "assets/icons/g-aria.webp", "g-coriolus": "assets/icons/g-coriolus.webp", "g-cypri": "assets/icons/g-cypri.webp", "g-diamond": "assets/icons/g-diamond.webp", "g-inina": "assets/icons/g-inina.webp", "g-kukuru": "assets/icons/g-kukuru.webp", "g-mela": "assets/icons/g-mela.webp", "g-odyle": "assets/icons/g-odyle.webp", "g-orichalcum": "assets/icons/g-orichalcum.webp", "g-ruby": "assets/icons/g-ruby.webp", "g-sapphire": "assets/icons/g-sapphire.webp", "g-targena": "assets/icons/g-targena.webp", "g-yggdrasil": "assets/icons/g-yggdrasil.webp", "lojas": "assets/icons/lojas.webp", "masm": "assets/icons/masm.webp", "mono": "assets/icons/mono.webp", "morfa": "assets/icons/morfa.webp", "odyle": "assets/icons/odyle.webp", "pujery": "assets/icons/pujery.webp", "rastro": "assets/icons/rastro.webp", "raydam": "assets/icons/raydam.webp", "spots": "assets/icons/spots.webp", "tele": "assets/icons/tele.webp"}</script><script>window.MF_PETS_DIR='assets/pets/'</script><script src="assets/maps/lista.js"></script><title>Guia do Assassino (PvP)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -802,7 +802,7 @@ button{cursor:pointer}
   <section data-pane="mapa" class="stack" hidden>
 <!--MAPAFARM-->
     <div class="panel stack" id="mapasFarm">
-      <div class="mf-head"><h2>Mapa de farm do Altgard</h2><span class="small muted">Arraste para mover, roda do mouse ou dois dedos para ampliar, toque num ponto para ver o nome. Dados: allthings.how, aion2pets.app e AION2 Hub; arte do mapa © NCSOFT.</span></div>
+      <div class="mf-head"><h2 id="mfTitulo">Mapa de farm do Altgard</h2><select id="mfMapa" class="mf-sel" aria-label="Escolher o mapa" hidden></select><span class="small muted">Arraste para mover, roda do mouse ou dois dedos para ampliar, toque num ponto para ver o nome. Dados: allthings.how, aion2pets.app e AION2 Hub; arte do mapa © NCSOFT.</span></div>
       <div class="mf-layout">
         <aside class="mf-side">
           <details open class="mf-sec"><summary>Camadas</summary>
@@ -866,8 +866,8 @@ button{cursor:pointer}
           </details>
           <details class="mf-sec"><summary>Cubos e dicas</summary>
             <ul class="small" style="margin:6px 0 0;padding-left:18px;display:grid;gap:4px">
-              <li><b>Cubos:</b> no Altgard precisam de <b>chave</b>. Cada quadrado é um cubo, que aparece em 1 de vários locais possíveis (ligue "Locais possíveis de cubo"). Toque num cubo para marcar como achado.</li>
-              <li><b>Azpha e Calêndula:</b> servem para Wind Serum e Mana Potion, boas para subir Alquimia até o 51.</li>
+              <li><b>Cubos:</b> cada quadrado é um cubo, que aparece em 1 de vários locais possíveis (ligue "Locais possíveis de cubo"). Toque num cubo para marcar como achado. No Altgard eles precisam de <b>chave</b>.</li>
+              <li data-alt><b>Azpha e Calêndula:</b> servem para Wind Serum e Mana Potion, boas para subir Alquimia até o 51.</li>
               <li><b>Teleportes</b> e o <b>Comerciante de Alquimia</b> (onde se compra o frasco) já vêm ligados.</li>
             </ul>
             <button type="button" class="mf-btn" id="mfClear" style="margin-top:8px">Limpar cubos achados</button>
@@ -942,15 +942,29 @@ button{cursor:pointer}
 <script>
 (() => {
   const root = document.getElementById('mapasFarm'); if (!root) return;
-  const D = JSON.parse(document.getElementById('mfData').textContent);
+  const MAPS = window.MF_MAPS = window.MF_MAPS || {};
+  MAPS.altgard = JSON.parse(document.getElementById('mfData').textContent);     // o Altgard vem embutido; os outros, de assets/maps/<mapa>/dados.js
+  const IMG0 = $img().getAttribute('src'); $img().removeAttribute('src');
+  const TPL = root.innerHTML;                                                  // painel limpo, refeito a cada troca de mapa
+  function $img() { return document.getElementById('mfImg'); }
   const $ = id => document.getElementById(id);
+  let refit = () => {};
+  document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-tab="mapa"]')) setTimeout(() => refit(), 60); });
+  window.addEventListener('hashchange', () => setTimeout(() => refit(), 60));
+  const boot = (D, MID) => {
+  const KS = MID === 'altgard' ? '' : ':' + MID;                                // cubos achados e rotas guardados por mapa
+  $('mfImg').src = D.src || IMG0; $('mfImg').alt = 'Mapa de ' + (D.nome || 'Altgard');
+  $('mfTitulo').textContent = 'Mapa de farm: ' + (D.nome || 'Altgard');
+  root.querySelectorAll('[data-alt]').forEach(e => { e.hidden = MID !== 'altgard'; });
+  const lista = window.MF_MAPLIST || [['altgard', 'Altgard']], ms = $('mfMapa');
+  if (lista.length > 1) { ms.hidden = false; lista.forEach(([i, n]) => { const o = document.createElement('option'); o.value = i; o.textContent = n; ms.append(o); }); ms.value = MID; ms.onchange = () => abrir(ms.value, MID); }
   const wrap = $('mfWrap'), stage = $('mfStage'), svg = $('mfSvg'), tip = $('mfTip');
   const [X0, Y0, X1, Y1] = D.box, IW = D.img[0], IH = D.img[1], SC = IW / (X1 - X0);
   const NS = 'http://www.w3.org/2000/svg';
   stage.style.width = IW + 'px'; stage.style.height = IH + 'px';
   let touched = false, lbOn = true, k = 1, tx = 0, ty = 0, kMin = .3, kMax = 8, moved = false, done = new Set();
-  try { done = new Set(JSON.parse(localStorage.getItem('mfCubos') || '[]')); } catch (e) {}
-  const save = () => { try { localStorage.setItem('mfCubos', JSON.stringify([...done])); } catch (e) {} };
+  try { done = new Set(JSON.parse(localStorage.getItem('mfCubos' + KS) || '[]')); } catch (e) {}
+  const save = () => { try { localStorage.setItem('mfCubos' + KS, JSON.stringify([...done])); } catch (e) {} };
   const fitK = () => Math.min(wrap.clientWidth / IW, wrap.clientHeight / IH);
   let raf = 0;
   const apply = () => { stage.style.transform = `translate(${tx}px,${ty}px) scale(${k})`; if (!raf) raf = requestAnimationFrame(() => { raf = 0; scaleMarks(); clearTimeout(tTimer); tTimer = setTimeout(updTiles, 120); }); };
@@ -1000,7 +1014,7 @@ button{cursor:pointer}
   D.labels.forEach(([n, x, y]) => { const t = el('text', { class: 'mf-lbl' }); t.textContent = n; t.dataset.x = x; t.dataset.y = y; lblG.append(t); });
   // botões de camada
   const chips = $('mfChips'); const gm = {}; let cur = chips; const chipOf = {}, petSel = {};
-  const applyVis = () => { if (!chipOf.cubos) return; const solo = $('mfCriOnly').checked && Object.keys(criSel).length + Object.keys(petSel).length > 0, zoomOK = k >= fitK() * 2.2; D.layers.forEach(L => { let on = !solo && (chipOf[L.id] || chipOf.cubos).getAttribute('aria-pressed') === 'true'; if (L.id === 'spots') on = on && zoomOK; groups[L.id].style.display = on ? '' : 'none'; }); };
+  const applyVis = () => { if (!Object.keys(chipOf).length) return; const solo = $('mfCriOnly').checked && Object.keys(criSel).length + Object.keys(petSel).length > 0, zoomOK = k >= fitK() * 2.2; D.layers.forEach(L => { let on = !solo && (chipOf[L.id] || chipOf.cubos || { getAttribute: () => 'false' }).getAttribute('aria-pressed') === 'true'; if (L.id === 'spots') on = on && zoomOK; groups[L.id].style.display = on ? '' : 'none'; }); };
   D.layers.forEach(L => {
     if (L.id === 'spots') return;
     if (!gm[L.grupo]) { let gd; gd = document.createElement('details'); gd.className = 'mf-gd'; gd.open = ['Cubos', 'Viagem e lojas', 'Ervas'].includes(L.grupo); gd.innerHTML = '<summary>' + L.grupo + '</summary><div class="mf-chips"></div>'; chips.append(gd); gm[L.grupo] = gd.lastChild; } cur = gm[L.grupo];
@@ -1017,6 +1031,7 @@ button{cursor:pointer}
   const go = $('mfGo'); D.labels.slice().sort((a, b) => a[0].localeCompare(b[0])).forEach(l => { const o = document.createElement('option'); o.value = l[1] + ',' + l[2]; o.textContent = l[0]; go.append(o); });
   const center = (x, y, z) => { touched = true; const w = wrap.clientWidth, h = wrap.clientHeight; k = Math.min(kMax, z); tx = w / 2 - (x - X0) * SC * k; ty = h / 2 - (y - Y0) * SC * k; clamp(); apply(); };
   go.onchange = () => { if (!go.value) return; const [x, y] = go.value.split(',').map(Number); hideTip(); center(x, y, fitK() * 4); };
+    $('mfAlq').hidden = !D.layers.some(l => l.id === 'alq');
     $('mfAlq').onclick = () => { const L = D.layers.find(l => l.id === 'alq'); chips.querySelectorAll('.mf-chip').forEach(b => { if (b.textContent.startsWith('Comerciante de Alquimia')) b.setAttribute('aria-pressed', 'true'); }); $('mfCriOnly').checked = false; applyVis(); scaleMarks(); const p = L.pts[0]; hideTip(); center(p[0], p[1], fitK() * 6); };
   $('mfClear').onclick = () => { done.clear(); save(); paintDone(); };
   // pets e criaturas: o pet nasce do monstro de mesmo nome (a Alma dele vem de lá); escolha pelo nome
@@ -1090,13 +1105,13 @@ button{cursor:pointer}
     tip.style.top = Math.max(4, Math.min(wrap.clientHeight - tip.offsetHeight - 4, sy - tip.offsetHeight - 10)) + 'px';
   };
   // detalhe extra: pedaços do mapa em alta resolução (carregados da internet; sem eles fica a imagem embutida)
-  const tl = $('mfTiles'), TS = 256, ZM = 5, masks = {}, cont = {}, dpr = Math.min(2, window.devicePixelRatio || 1);
+  const tl = $('mfTiles'), TS = 256, ZM = D.zm || 5, ZX = D.zx || ZM, masks = {}, cont = {}, dpr = Math.min(2, window.devicePixelRatio || 1);
   Object.keys(D.tiles || {}).forEach(z => { const m = D.tiles[z], r = atob(m[2]), b = new Uint8Array(r.length); for (let i = 0; i < r.length; i++) b[i] = r.charCodeAt(i); masks[z] = { c: m[0], r: m[1], b }; });
   const has = (z, x, y) => { const m = masks[z]; if (!m || x < 0 || y < 0 || x >= m.c || y >= m.r) return false; const i = y * m.c + x; return !!(m.b[i >> 3] & (1 << (i & 7))); };
   let tTimer = 0, curZ = -1, tOk = 0, tErr = 0;
   const updTiles = () => {
     if (!D.tileUrl || !wrap.clientWidth || (tErr >= 6 && !tOk)) return;
-    const s = SC * k, z = Math.max(0, Math.min(ZM, Math.round(ZM + Math.log2(s * dpr))));
+    const s = SC * k, z = Math.max(0, Math.min(ZX, Math.round(ZM + Math.log2(s * dpr))));
     const nat = TS * Math.pow(2, ZM - z);                      // pixels nativos por pedaço neste nível
     const nx0 = X0 + (-tx / k) / SC, ny0 = Y0 + (-ty / k) / SC, nx1 = nx0 + wrap.clientWidth / s, ny1 = ny0 + wrap.clientHeight / s;
     const x0 = Math.floor(nx0 / nat), x1 = Math.floor(nx1 / nat), y0 = Math.floor(ny0 / nat), y1 = Math.floor(ny1 / nat);
@@ -1173,11 +1188,11 @@ button{cursor:pointer}
   [['mfRK', 'mfRKo'], ['mfRR', 'mfRRo'], ['mfRG', 'mfRGo']].forEach(([a, b]) => { $(a).oninput = () => { $(b).textContent = $(a).value; mudou(); }; });
   ['mfRV', 'mfRT'].forEach(a => { $(a).oninput = stats; });
   $('mfRCalB').onclick = () => { const t = val('mfRCal'), S = segs(), len = S.reduce((a, [p1, p2]) => a + dist(p1, p2), 0); if (t > 0 && len) { $('mfRV').value = (len / t).toFixed(1); stats(); } };
-  const guarda = () => { try { return JSON.parse(localStorage.getItem('mfRotas') || '{}'); } catch (e) { return {}; } };
+  const guarda = () => { try { return JSON.parse(localStorage.getItem('mfRotas' + KS) || '{}'); } catch (e) { return {}; } };
   const listaRotas = () => { const sel = $('mfRList'), g = guarda(); sel.length = 1; Object.keys(g).forEach(n => { const o = document.createElement('option'); o.value = o.textContent = n; sel.append(o); }); };
-  $('mfRSave').onclick = () => { const n = $('mfRName').value.trim(); if (!n || !RT.pts.length) return; const g = guarda(); g[n] = { pts: RT.pts, closed: RT.closed }; try { localStorage.setItem('mfRotas', JSON.stringify(g)); } catch (e) {} listaRotas(); $('mfRList').value = n; };
+  $('mfRSave').onclick = () => { const n = $('mfRName').value.trim(); if (!n || !RT.pts.length) return; const g = guarda(); g[n] = { pts: RT.pts, closed: RT.closed }; try { localStorage.setItem('mfRotas' + KS, JSON.stringify(g)); } catch (e) {} listaRotas(); $('mfRList').value = n; };
   $('mfRList').onchange = e => { const r = guarda()[e.target.value]; if (!r) return; RT.pts = r.pts.map(q => q.slice()); RT.closed = r.closed; $('mfRClosed').checked = r.closed; $('mfRName').value = e.target.value; mudou(); };
-  $('mfRDel').onclick = () => { const n = $('mfRList').value, g = guarda(); if (!n) return; delete g[n]; try { localStorage.setItem('mfRotas', JSON.stringify(g)); } catch (e) {} listaRotas(); };
+  $('mfRDel').onclick = () => { const n = $('mfRList').value, g = guarda(); if (!n) return; delete g[n]; try { localStorage.setItem('mfRotas' + KS, JSON.stringify(g)); } catch (e) {} listaRotas(); };
   $('mfRCopy').onclick = () => { const tele = (D.layers.find(l => l.id === 'tele') || { pts: [] }).pts, S = segs(), len = S.reduce((a, [p1, p2]) => a + dist(p1, p2), 0);
     const linhas = RT.pts.map((q, i) => { const rg = D.labels.reduce((a, l) => dist(q, [l[1], l[2]]) < dist(q, [a[1], a[2]]) ? l : a, D.labels[0]), tp = tele.reduce((a, t) => dist(q, t) < dist(q, a) ? t : a, tele[0]);
       return (i + 1) + ') ' + rg[0] + (tp ? ', teleporte mais perto: ' + tp[2] + ' (' + Math.round(dist(q, tp)) + ' u)' : ''); });
@@ -1203,10 +1218,20 @@ button{cursor:pointer}
   let ready = false; const init = () => { if (ready || !wrap.clientWidth) return; ready = true; fit(); paintDone(); };
   new ResizeObserver(() => { if (!ready) init(); else if (!touched && wrap.clientWidth) fit(); else { kMin = fitK() * .8; kMax = Math.max(fitK() * 3, 2.7); } }).observe(wrap);
   init();
-  const refit = () => { if (wrap.clientWidth && !touched) { ready = true; fit(); paintDone(); } };
-  document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-tab="mapa"]')) setTimeout(refit, 60); });
-  window.addEventListener('hashchange', () => setTimeout(refit, 60));
-  [150, 600, 1500].forEach(ms => setTimeout(refit, ms));
+  refit = () => { if (wrap.clientWidth && !touched) { ready = true; fit(); paintDone(); } };
+  [150, 600, 1500].forEach(ms => setTimeout(() => refit(), ms));
+  };
+  // troca de mapa: refaz o painel; o arquivo do mapa é carregado na primeira vez (funciona também por file://)
+  const abrir = (id, antes) => {
+    const ir = () => { root.innerHTML = TPL; boot(MAPS[id], id); };
+    if (MAPS[id]) return ir();
+    const sel = $('mfMapa'); sel.disabled = true;
+    const sc = document.createElement('script'); sc.src = 'assets/maps/' + id + '/dados.js';
+    sc.onload = () => { if (MAPS[id]) ir(); else { sel.disabled = false; sel.value = antes; } };
+    sc.onerror = () => { sel.disabled = false; sel.value = antes; };
+    document.head.append(sc);
+  };
+  boot(MAPS.altgard, 'altgard');
 })();
 </script>
 <!--/MAPAFARM-->
