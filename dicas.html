@@ -1,4 +1,4 @@
-<meta charset="utf-8"><style>.hero,.tabwrap{display:none!important}</style><script>if(!location.hash)history.replaceState(null,'','#dicas')</script><script>window.MF_ICONS={"alq": "assets/icons/alq.webp", "azpha": "assets/icons/azpha.webp", "calen": "assets/icons/calen.webp", "cubos": "assets/icons/cubos.webp", "lojas": "assets/icons/lojas.webp", "morfa": "assets/icons/morfa.webp", "odyle": "assets/icons/odyle.webp", "pujery": "assets/icons/pujery.webp", "raydam": "assets/icons/raydam.webp", "spots": "assets/icons/spots.webp", "tele": "assets/icons/tele.webp"}</script><script>window.MF_PETS_DIR='assets/pets/'</script><title>Guia do Assassino</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>.hero,.tabwrap{display:none!important}</style><script>if(!location.hash)history.replaceState(null,'','#dicas')</script><style>.snav{margin:-20px -16px 18px}</style><script>window.MF_ICONS={"alq": "assets/icons/alq.webp", "azpha": "assets/icons/azpha.webp", "calen": "assets/icons/calen.webp", "cubos": "assets/icons/cubos.webp", "lojas": "assets/icons/lojas.webp", "morfa": "assets/icons/morfa.webp", "odyle": "assets/icons/odyle.webp", "pujery": "assets/icons/pujery.webp", "raydam": "assets/icons/raydam.webp", "spots": "assets/icons/spots.webp", "tele": "assets/icons/tele.webp"}</script><script>window.MF_PETS_DIR='assets/pets/'</script><title>Guia do Assassino</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -435,15 +435,21 @@ button{cursor:pointer}
 </style>
 
 <style>
-.snav{position:sticky;top:0;z-index:60;display:flex;gap:4px;align-items:center;flex-wrap:wrap;padding:8px 14px;background:#0b0b12;border-bottom:1px solid #2a2a3a;font:500 14px 'Barlow',system-ui,sans-serif}
-.snav a,.snav button{font:inherit;color:#e8e8f0;background:none;border:0;padding:7px 12px;border-radius:8px;cursor:pointer;text-decoration:none}
-.snav a:hover,.snav button:hover{background:#1c1c2a}.snav .on{background:#23233a;color:#fff}
-.snav .brand{font-weight:700;letter-spacing:.02em;margin-right:8px}
-.snav .dd{position:relative}.snav .ddp{position:absolute;left:0;top:100%;min-width:200px;background:#12121c;border:1px solid #2a2a3a;border-radius:10px;padding:6px;display:grid;gap:2px;box-shadow:0 8px 24px #0009}
-.snav .ddp[hidden],.snav .bl[hidden]{display:none}.snav .cls{width:100%;text-align:left}
-.snav .bl{display:grid;padding-left:14px}.snav .bl a{color:#c9c9dc}
-@media(max-width:560px){.snav{padding:6px 8px}.snav a,.snav button{padding:6px 8px}}
-</style><nav class="snav"><a class="brand" href="index.html">Guia Aion 2</a><div class="dd"><button type="button" id="snC">Guias das classes ▾</button><div class="ddp" hidden><button type="button" class="cls">Assassino ▸</button><div class="bl" hidden><a href="guia-assassino-pve.html">PvE</a><a href="guia-assassino-pvp.html">PvP</a></div><button type="button" class="cls">Templar ▸</button><div class="bl" hidden><a href="guia-templar-pve.html">PvE</a></div></div></div><a href="geral.html">Guia geral</a><a href="mapa.html">Mapa</a><a href="dicas.html" class=on>Dicas</a><a href="ferramentas.html">Ferramentas</a></nav><script>(()=>{const c=document.getElementById("snC"),p=c.nextElementSibling;c.onclick=e=>{e.stopPropagation();p.hidden=!p.hidden};p.querySelectorAll(".cls").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=b.nextElementSibling;const o=l.hidden;p.querySelectorAll(".bl").forEach(x=>x.hidden=true);l.hidden=!o});document.addEventListener("click",()=>{p.hidden=true});const on=p.querySelector(".bl a.on");if(on){on.parentNode.hidden=false}})();</script>
+.snav{position:sticky;top:0;z-index:60;display:flex;gap:2px;align-items:center;padding:0 14px;min-height:52px;background:#0d0f15;border-bottom:1px solid #2a3040;font:500 14.5px 'Barlow','Segoe UI',system-ui,sans-serif;flex-wrap:wrap}
+.snav a,.snav button{font:inherit;color:#c9ccd8;background:none;border:0;padding:8px 12px;border-radius:8px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.snav a:hover,.snav button:hover{background:#1b1f2b;color:#fff}
+.snav a:focus-visible,.snav button:focus-visible{outline:2px solid #a47cff;outline-offset:1px}
+.snav .on{color:#fff;background:#a47cff22;box-shadow:inset 0 -2px 0 #a47cff}
+.snav .brand{font:700 16px 'Chakra Petch',system-ui,sans-serif;letter-spacing:.03em;margin-right:10px;color:#fff;display:flex;gap:8px;align-items:center}
+.snav .brand i{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#a47cff,#e6b45c);display:inline-block}
+.snav .dd{position:relative}
+.snav .ddp{position:absolute;left:0;top:100%;min-width:230px;background:#151821;border:1px solid #363d50;border-radius:12px;padding:6px;display:grid;gap:2px;box-shadow:0 12px 32px #000a}
+.snav .ddp[hidden],.snav .bl[hidden]{display:none}.snav .cls{width:100%;text-align:left;display:flex;justify-content:space-between}
+.snav .cls::after{content:"▸";color:#9298a8;transition:transform .15s}.snav .cls.open::after{transform:rotate(90deg)}
+.snav .bl{display:flex;gap:6px;padding:2px 8px 8px}.snav .bl a{flex:1;text-align:center;color:#cdb8ff;background:#1b1f2b;border:1px solid #2a3040}
+.snav .bl a:hover,.snav .bl a.on{background:#a47cff33;color:#fff}
+@media(max-width:560px){.snav{padding:0 8px;min-height:46px;font-size:14px}.snav .dd{position:static}.snav a,.snav button{padding:8px 9px}.snav .brand span{display:none}.snav .ddp{left:8px;right:8px}}
+</style><nav class="snav"><a class="brand" href="index.html"><i></i><span>Guia Aion 2</span></a><div class="dd"><button type="button" id="snC">Guias das classes ▾</button><div class="ddp" hidden><button type="button" class="cls">Assassino</button><div class="bl" hidden><a href="guia-assassino-pve.html">PvE</a><a href="guia-assassino-pvp.html">PvP</a></div><button type="button" class="cls">Templar</button><div class="bl" hidden><a href="guia-templar-pve.html">PvE</a></div></div></div><a href="geral.html">Guia geral</a><a href="mapa.html">Mapa</a><a href="dicas.html" class=on>Dicas</a><a href="ferramentas.html">Ferramentas</a></nav><script>(()=>{const c=document.getElementById("snC"),p=c.nextElementSibling;c.onclick=e=>{e.stopPropagation();p.hidden=!p.hidden};p.querySelectorAll(".cls").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=b.nextElementSibling;const o=l.hidden;p.querySelectorAll(".bl").forEach(x=>x.hidden=true);l.hidden=!o;p.querySelectorAll(".cls").forEach(x=>x.classList.remove("open"));if(o)b.classList.add("open")});document.addEventListener("click",()=>{p.hidden=true});document.addEventListener("keydown",e=>{if(e.key=="Escape")p.hidden=true});const on=p.querySelector(".bl a.on");if(on){on.parentNode.hidden=false;on.parentNode.previousElementSibling.classList.add("open")}})();</script>
 <div class="wrap">
   <header class="hero">
     <img class="cls" alt="" src="" id="clsIcon">
