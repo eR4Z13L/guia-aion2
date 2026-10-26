@@ -790,6 +790,8 @@ button{cursor:pointer}
                 <label>Respawn (min)<input type="number" id="mfRT" min="1" max="240" value="10"></label>
                 <label>Tempo da volta (s)<span class="row" style="gap:4px"><input type="number" id="mfRCal" min="1" placeholder="medido" style="width:80px"><button type="button" class="mf-btn" id="mfRCalB">Calibrar</button></span></label>
               </div>
+              <div class="small muted">Itens da rota: escolha um ou vários (cubo + erva + minério…). A sugestão usa só o que está ligado.</div>
+              <div id="mfRItens" class="mf-chips"></div>
               <div id="mfRTabs" class="row" style="gap:4px;flex-wrap:wrap"></div>
               <div id="mfRInfo" class="mf-rinfo small muted">Ligue as camadas que quer farmar, amplie numa área e toque em "Sugerir rota", ou ative "Adicionar pins" e toque no mapa. Arraste os pins para ajustar.</div>
               <div class="row" style="gap:6px;flex-wrap:wrap">
@@ -945,7 +947,7 @@ button{cursor:pointer}
     tx = (w - IW * k) / 2; ty = (h - IH * k) / 2; apply();
   };
   const el = (n, a) => { const e = document.createElementNS(NS, n); for (const x in a) e.setAttribute(x, a[x]); return e; };
-  const groups = {}, marks = [];
+  const groups = {}, marks = []; let syncItens = () => {};
   const layG = el('g', {}), routeG = el('g', {}), lblG = el('g', {}); svg.append(layG, routeG, lblG); let routeDraw = () => {};
   const IC = window.MF_ICONS || {};
   const icoMark = (L, small) => { const g = el('g', {}), r = small ? 7 : 13;
@@ -991,7 +993,7 @@ button{cursor:pointer}
     if (!gm[L.grupo]) { let gd; gd = document.createElement('details'); gd.className = 'mf-gd'; gd.open = ['Cubos', 'Viagem e lojas', 'Ervas'].includes(L.grupo); gd.innerHTML = '<summary>' + L.grupo + '</summary><div class="mf-chips"></div>'; chips.append(gd); gm[L.grupo] = gd.lastChild; } cur = gm[L.grupo];
     const b = document.createElement('button'); b.type = 'button'; b.className = 'mf-chip'; b.style.setProperty('--c', L.cor);
     b.setAttribute('aria-pressed', L.on ? 'true' : 'false'); b.innerHTML = (IC[L.id] ? '<img src="' + IC[L.id] + '" alt="" width="18" height="18" style="border-radius:50%">' : '<i></i>') + L.nome + ' <small>' + L.pts.length + '</small>';
-    b.onclick = () => { const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); applyVis(); if (on) scaleMarks(); }; chipOf[L.id] = b;
+    b.onclick = () => { const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); applyVis(); if (on) scaleMarks(); syncItens(); }; chipOf[L.id] = b;
     cur.append(b);
   });
   const lb = document.createElement('button'); lb.type = 'button'; lb.className = 'mf-chip'; lb.style.setProperty('--c', '#fff');
@@ -1006,7 +1008,7 @@ button{cursor:pointer}
   const center = (x, y, z) => { touched = true; const w = wrap.clientWidth, h = wrap.clientHeight; k = Math.min(kMax, z); tx = w / 2 - (x - X0) * SC * k; ty = h / 2 - (y - Y0) * SC * k; clamp(); apply(); };
   go.onchange = () => { if (!go.value) return; const [x, y] = go.value.split(',').map(Number); hideTip(); center(x, y, fitK() * 4); };
     $('mfAlq').hidden = !D.layers.some(l => l.id === 'alq');
-    $('mfAlq').onclick = () => { const L = D.layers.find(l => l.id === 'alq'); chips.querySelectorAll('.mf-chip').forEach(b => { if (b.textContent.startsWith('Comerciante de Alquimia')) b.setAttribute('aria-pressed', 'true'); }); $('mfCriOnly').checked = false; applyVis(); scaleMarks(); const p = L.pts[0]; hideTip(); center(p[0], p[1], fitK() * 6); };
+    $('mfAlq').onclick = () => { const L = D.layers.find(l => l.id === 'alq'); chips.querySelectorAll('.mf-chip').forEach(b => { if (b.textContent.startsWith('Comerciante de Alquimia')) b.setAttribute('aria-pressed', 'true'); }); $('mfCriOnly').checked = false; applyVis(); scaleMarks(); syncItens(); const p = L.pts[0]; hideTip(); center(p[0], p[1], fitK() * 6); };
   $('mfClear').onclick = () => { done.clear(); save(); paintDone(); };
   // pets e criaturas: o pet nasce do monstro de mesmo nome (a Alma dele vem de lá); escolha pelo nome
   const CRI = D.cri || [], criG = el('g', {}), criSel = {}, CORES = ['#ff5ca8', '#5cd1ff', '#ffd25c', '#8cff5c', '#c08cff', '#ff8c5c', '#5cffc0', '#ff5c5c'];
@@ -1119,6 +1121,10 @@ button{cursor:pointer}
   const segsOf = r => { const P = r.pts, o = []; for (let i = 0; i + 1 < P.length; i++) o.push([P[i], P[i + 1]]); if (r.closed && P.length > 2) o.push([P[P.length - 1], P[0]]); return o; };
   const lenOf = r => segsOf(r).reduce((a, [p1, p2]) => a + dist(p1, p2), 0);
   const coletaveis = () => D.layers.filter(L => ['Cubos', 'Ervas', 'Minérios', 'Outros'].includes(L.grupo) && L.id !== 'spots' && chipOf[L.id] && chipOf[L.id].getAttribute('aria-pressed') === 'true');
+  syncItens = () => { const box = $('mfRItens'); box.innerHTML = ''; D.layers.filter(L => ['Cubos', 'Ervas', 'Minérios', 'Outros'].includes(L.grupo) && L.id !== 'spots').forEach(L => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'mf-chip'; b.style.setProperty('--c', L.cor); b.setAttribute('aria-pressed', chipOf[L.id].getAttribute('aria-pressed'));
+    b.innerHTML = (IC[L.id] ? '<img src="' + IC[L.id] + '" alt="" width="16" height="16" style="border-radius:50%">' : '<i></i>') + L.nome; b.onclick = () => chipOf[L.id].click(); box.append(b); }); };
+  syncItens();
   const contar = r => { const S = segsOf(r), R = val('mfRR'); let tot = 0; const lista = coletaveis().map(L => { const n = L.pts.filter(q => (S.length ? S.some(([a, b]) => segDist(q, a, b) <= R) : r.pts.some(a => dist(q, a) <= R))).length; tot += n; return n ? L.nome + ' <b>' + n + '</b>' : ''; }).filter(Boolean); return { tot, lista }; };
   const drawRoute = () => { routeG.replaceChildren(); const gap = val('mfRG');
     ROUTES.forEach((r, ri) => { const P = r.pts; if (!P.length) return; const S = P.map(q => scr(q[0], q[1])), ativa = ri === RT.ativa, fecha = r.closed && P.length > 2;
@@ -1194,8 +1200,8 @@ button{cursor:pointer}
       return '  ' + (i + 1) + ') ' + rg[0] + (tp ? ', teleporte mais perto: ' + tp[2] + ' (' + Math.round(dist(q, tp)) + ' u)' : ''); });
       return 'Rota ' + (ri + 1) + ' (' + (r.closed ? 'circular' : 'ida') + ', ' + r.pts.length + ' pins, ' + Math.round(len) + ' unidades, volta de ' + fmt(len / v) + ')\n' + linhas.join('\n'); }).join('\n\n');
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).catch(() => window.prompt('Copie o roteiro:', txt)); };
-  $('mfOff').onclick = () => { Object.values(chipOf).forEach(b => b.setAttribute('aria-pressed', 'false')); applyVis(); };
-  $('mfDef').onclick = () => { D.layers.forEach(L => { if (chipOf[L.id]) chipOf[L.id].setAttribute('aria-pressed', L.on ? 'true' : 'false'); }); applyVis(); scaleMarks(); };
+  $('mfOff').onclick = () => { Object.values(chipOf).forEach(b => b.setAttribute('aria-pressed', 'false')); applyVis(); syncItens(); };
+  $('mfDef').onclick = () => { D.layers.forEach(L => { if (chipOf[L.id]) chipOf[L.id].setAttribute('aria-pressed', L.on ? 'true' : 'false'); }); applyVis(); scaleMarks(); syncItens(); };
   listaRotas();
   // gestos
   const ptrs = new Map(); let sx0 = 0, sy0 = 0, dist0 = 0;
