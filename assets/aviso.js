@@ -103,7 +103,6 @@
     if (aberto) { const a = $('avP').querySelector('[data-t=sh]'), b = $('avP').querySelector('[data-t=di]'); if (a) a.textContent = mmss(e.sh); if (b) b.textContent = mmss(e.di); }   // só os relógios, para não refazer a lista a cada segundo
   };
   box.addEventListener('click', e => { if (e.target.closest('#avF')) { aberto = !aberto; $('avP').hidden = !aberto; $('avF').setAttribute('aria-expanded', aberto); $('avT').hidden = true; if (aberto) { ler(); rolar(); desenhaLista(); } } });
-  document.addEventListener('click', e => { if (aberto && !box.contains(e.target)) { aberto = false; $('avP').hidden = true; $('avF').setAttribute('aria-expanded', false); } });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && aberto) { aberto = false; $('avP').hidden = true; $('avF').focus(); } });
   window.addEventListener('storage', marca);
   setInterval(marca, 1000); marca();
