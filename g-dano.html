@@ -1,0 +1,55 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dano e gear · Guia Aion 2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>:root{--bg:#0d0f15;--panel:#151821;--panel2:#1b1f2b;--line:#2a3040;--fg:#ebe7df;--muted:#9298a8;--violet:#a47cff;--vi:#cdb8ff;--gold:#e6b45c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 'Barlow','Segoe UI',system-ui,sans-serif}main{max-width:1000px;margin:0 auto;padding:28px 16px 70px}
+h1,h2,h3{font-family:'Chakra Petch','Segoe UI',system-ui,sans-serif;line-height:1.2;margin:0}h1{font-size:2rem}h2{font-size:1.15rem;margin:0 0 10px;color:#fff}
+.hero{background:linear-gradient(120deg,#1d1730,var(--panel) 60%);border:1px solid var(--line);border-radius:16px;padding:26px 24px;margin-bottom:22px}
+.hero p{color:var(--muted);margin:8px 0 0;max-width:60ch}.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{display:inline-block;padding:9px 16px;border-radius:9px;background:var(--violet);color:#14101f;font-weight:600;text-decoration:none}.btn.alt{background:var(--panel2);color:var(--fg);border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.12)}
+.sub{color:var(--muted);margin:6px 0 20px}.sec{font:600 .8rem 'Chakra Petch',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:26px 0 10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.grid .card{margin:0}
+a.card{display:block;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}a.card:hover{border-color:var(--violet);transform:translateY(-2px)}
+a.card h2:after{content:" →";color:var(--violet)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip{padding:5px 13px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--vi);text-decoration:none;font-size:.92rem}.chip:hover{border-color:var(--violet);background:#a47cff22;color:#fff}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px}
+ul{margin:6px 0 0;padding-left:20px;display:grid;gap:6px}a{color:#9ec5ff}.m{color:var(--muted);font-size:.9rem;margin:10px 0 0}.grid .m{margin:0}
+.card[id]{scroll-margin-top:68px}
+@media(max-width:560px){h1{font-size:1.6rem}.hero{padding:20px 16px}}</style></head><body>
+<style>
+.snav{position:sticky;top:0;z-index:60;display:flex;gap:2px;align-items:center;padding:0 14px;min-height:52px;background:#0d0f15;border-bottom:1px solid #2a3040;font:500 14.5px 'Barlow','Segoe UI',system-ui,sans-serif;flex-wrap:wrap}
+.snav a,.snav button{font:inherit;color:#c9ccd8;background:none;border:0;padding:8px 12px;border-radius:8px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.snav a:hover,.snav button:hover{background:#1b1f2b;color:#fff}
+.snav a:focus-visible,.snav button:focus-visible{outline:2px solid #a47cff;outline-offset:1px}
+.snav .on{color:#fff;background:#a47cff22;box-shadow:inset 0 -2px 0 #a47cff}
+.snav .brand{font:700 16px 'Chakra Petch',system-ui,sans-serif;letter-spacing:.03em;margin-right:10px;color:#fff;display:flex;gap:8px;align-items:center}
+.snav .brand i{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#a47cff,#e6b45c);display:inline-block}
+.snav .dd{position:relative}
+.snav .ddp{position:absolute;left:0;top:100%;min-width:230px;background:#151821;border:1px solid #363d50;border-radius:12px;padding:6px;display:grid;gap:2px;box-shadow:0 12px 32px #000a}
+.snav .ddp[hidden],.snav .bl[hidden]{display:none}.snav .cls{width:100%;text-align:left;display:flex;justify-content:space-between}
+.snav .cls::after{content:"▸";color:#9298a8;transition:transform .15s}.snav .cls.open::after{transform:rotate(90deg)}
+.snav .bl{display:flex;gap:6px;padding:2px 8px 8px}.snav .bl a{flex:1;text-align:center;color:#cdb8ff;background:#1b1f2b;border:1px solid #2a3040}
+.snav .bl a:hover,.snav .bl a.on{background:#a47cff33;color:#fff}
+@media(max-width:560px){.snav{padding:0 8px;min-height:46px;font-size:14px}.snav .dd{position:static}.snav a,.snav button{padding:8px 9px}.snav .brand span{display:none}.snav .ddp{left:8px;right:8px}}
+</style><nav class="snav"><a class="brand" href="index.html"><i></i><span>Guia Aion 2</span></a><div class="dd"><button type="button" id="snC">Guias das classes ▾</button><div class="ddp" hidden><button type="button" class="cls">Assassino</button><div class="bl" hidden><a href="guia-assassino-pve.html">PvE</a><a href="guia-assassino-pvp.html">PvP</a></div><button type="button" class="cls">Templar</button><div class="bl" hidden><a href="guia-templar-pve.html">PvE</a></div></div></div><a href="geral.html" class=on>Guia geral</a><a href="tarefas.html">Tarefas</a><a href="mapa.html">Mapa</a><a href="dicas.html">Dicas</a><a href="ferramentas.html">Ferramentas</a></nav><script>(()=>{const c=document.getElementById("snC"),p=c.nextElementSibling;c.onclick=e=>{e.stopPropagation();p.hidden=!p.hidden};p.querySelectorAll(".cls").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=b.nextElementSibling;const o=l.hidden;p.querySelectorAll(".bl").forEach(x=>x.hidden=true);l.hidden=!o;p.querySelectorAll(".cls").forEach(x=>x.classList.remove("open"));if(o)b.classList.add("open")});document.addEventListener("click",()=>{p.hidden=true});document.addEventListener("keydown",e=>{if(e.key=="Escape")p.hidden=true});const on=p.querySelector(".bl a.on");if(on){on.parentNode.hidden=false;on.parentNode.previousElementSibling.classList.add("open")}})();</script><script src="assets/aviso.js" defer></script>
+<main><style>
+.gh h1{margin:0}.gh .sub{margin:6px 0 4px}
+.gg{font:600 .78rem 'Chakra Petch',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#e6b45c;margin:26px 0 10px;display:flex;align-items:center;gap:10px}.gg:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,#2a3040,transparent)}
+.gc{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:12px}
+.gk{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:168px;padding:14px;border:1px solid #2a3040;border-radius:12px;overflow:hidden;text-decoration:none;color:#ebe7df;background:#0d0f15;isolation:isolate;transition:border-color .2s,transform .2s,box-shadow .2s}
+.gk:before{content:"";position:absolute;inset:0;z-index:-2;background:var(--bg) center/cover;filter:saturate(.8) brightness(.62);transition:transform .35s,filter .35s}
+.gk:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0d0f1500 0%,#0d0f15b8 58%,#0d0f15f2 100%)}
+.gk:hover{border-color:#a47cff;transform:translateY(-2px);box-shadow:0 8px 26px #0009}.gk:hover:before{transform:scale(1.06);filter:saturate(1) brightness(.78)}
+.gk:focus-visible{outline:2px solid #a47cff;outline-offset:2px}
+.gk .gi{position:absolute;top:12px;left:12px;width:42px;height:42px;display:grid;place-items:center;background:#0d0f15d9;border:1px solid #e6b45c88;border-radius:11px;box-shadow:0 0 14px #e6b45c22}
+.gk svg{width:24px;height:24px;stroke:#e6b45c;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.gk b{font:700 1.08rem 'Chakra Petch',sans-serif;display:block;color:#fff}.gk span{font-size:.88rem;color:#c3c7d4;line-height:1.35}
+.gh2{position:relative;border:1px solid #2a3040;border-radius:16px;overflow:hidden;padding:30px 24px;margin-bottom:20px;isolation:isolate}
+.gh2:before{content:"";position:absolute;inset:0;z-index:-2;background:var(--bg) center/cover;filter:brightness(.5) saturate(.85)}.gh2:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0d0f15ee,#0d0f1580 70%,#0d0f1540)}
+.gh2 h1{margin:0}.gh2 p{color:#cdd1dd;max-width:62ch;margin:8px 0 0}.gh2 .gi2{width:46px;height:46px;border:1px solid #e6b45c88;border-radius:12px;display:grid;place-items:center;background:#0d0f15d9;margin-bottom:12px}.gh2 .gi2 svg{width:26px;height:26px;stroke:#e6b45c;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.gh2 .back{display:inline-block;color:#cdb8ff;text-decoration:none;font-size:.9rem;margin-bottom:10px}
+.nc{display:inline-block;font-size:.72rem;font-weight:600;color:#e6b45c;border:1px solid #e6b45c66;border-radius:6px;padding:0 6px;vertical-align:1px}
+ol{margin:6px 0 0;padding-left:22px;display:grid;gap:4px}
+.vm{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px}.vm .chip{font-size:.92rem}
+</style><div class="gh2" style="--bg:url('assets/geral/w4.webp')"><a class="back" href="geral.html">← Guia geral</a><div class="gi2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l9-9M13 11l4-7 3 3-7 4M6 14l4 4"/></svg></div><h1>Dano e gear</h1><p>Como saber se uma mudança melhorou seu dano.</p></div><div class="card"><h2>Medidor de dano</h2><ul><li>O <b>Aion2Dps</b> guarda as lutas e mostra DPS, precisão, defesa e buffs.</li><li>Use em um boneco por 60 s para testar mudanças de rotação.</li></ul></div><div class="card"><h2>Equipamento</h2><ul><li>Melhore o set inteiro, não uma peça só.</li><li>Marcos de Item Level: veja Começando.</li><li>Stigma Shards (comprados com Abyss Points) também aumentam o dano em PvE.</li></ul></div><div class="sec">Veja também</div><div class="vm"><a class="chip" href="g-comecando.html">Começando</a><a class="chip" href="g-lojas.html">Lojas e moedas</a><a class="chip" href="g-daevanion.html">Daevanion e skills</a><a class="chip" href="ferramentas.html" style="border-color:#a47cff">Ferramentas →</a></div></main></body></html>
