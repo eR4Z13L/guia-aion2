@@ -1099,7 +1099,7 @@ button{cursor:pointer}
   const defs = el('defs', {}), clip = el('clipPath', { id: 'mfClip' }); clip.append(el('circle', { r: 11 })); defs.append(clip); svg.prepend(defs);
   const petG = el('g', {}); svg.insertBefore(petG, lblG);
   let genero = '', busca = '';
-  const petImg = s => PD ? '<img src="' + PD + s.s + '.webp" alt="">' : '<span class="ph">' + s.n[0] + '</span>';
+  const petImg = s => PD ? '<img src="' + PD + s.s + '.webp" alt="" loading="lazy" decoding="async">' : '<span class="ph">' + s.n[0] + '</span>';
   const drawPets = () => { const grid = $('mfPetGrid'); grid.innerHTML = '';
     PETS.filter(s => (!genero || s.g === genero) && s.n.toLowerCase().includes(busca)).forEach(s => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'mf-pet'; b.style.setProperty('--c', GC[s.g] || '#fff'); b.setAttribute('aria-pressed', petSel[s.s] ? 'true' : 'false');
