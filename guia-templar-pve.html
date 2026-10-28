@@ -760,84 +760,108 @@ button{cursor:pointer}
   <section data-pane="mapa" class="stack" hidden>
 <!--MAPAFARM-->
     <div class="panel stack" id="mapasFarm">
-      <div class="mf-head"><h2 id="mfTitulo">Mapa de farm do Altgard</h2><select id="mfMapa" class="mf-sel" aria-label="Escolher o mapa" hidden></select><span class="small muted">Arraste para mover, roda do mouse ou dois dedos para ampliar, toque num ponto para ver o nome. Dados: allthings.how, aion2pets.app e AION2 Hub; arte do mapa © NCSOFT.</span></div>
+      <div class="mf-head"><h2 id="mfTitulo">Mapa de farm do Altgard</h2><span class="small muted">Arraste para mover, roda do mouse ou dois dedos para ampliar, toque num ponto para ver o nome. Dados: allthings.how, aion2pets.app e AION2 Hub; arte do mapa © NCSOFT.</span></div>
       <div class="mf-layout">
-        <aside class="mf-side">
-          <details open class="mf-sec"><summary>Camadas</summary>
-            <div class="row" style="gap:6px;margin-bottom:4px"><button type="button" class="mf-btn" id="mfOff">Desligar tudo</button><button type="button" class="mf-btn" id="mfDef">Padrão</button></div>
-            <div id="mfChips"></div></details>
-          <details open class="mf-sec"><summary>Ir para</summary>
-            <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center">
-              <select id="mfGo" class="mf-sel"><option value="">Escolha um lugar…</option></select>
-              <button type="button" class="mf-btn" id="mfAlq">Comerciante de Alquimia</button>
-            </div>
-          </details>
-          <details open class="mf-sec" id="mfRotaSec"><summary>Rotas de farm</summary>
-            <div class="stack" style="gap:8px">
-              <div class="row" style="gap:6px;flex-wrap:wrap">
-                <button type="button" class="mf-btn" id="mfRAdd" aria-pressed="false">＋ Adicionar pins</button>
-                <button type="button" class="mf-btn" id="mfRSug">Sugerir rota</button>
-                <button type="button" class="mf-btn" id="mfRUndo">Desfazer pin</button>
-                <button type="button" class="mf-btn" id="mfRClr">Remover esta rota</button>
-                <button type="button" class="mf-btn" id="mfRClrAll">Limpar todas</button>
+        <aside class="mf-side" id="mfSide">
+          <div class="mf-sh"><b>Painel do mapa</b><button type="button" class="mf-btn" id="mfPanelX" aria-label="Fechar o painel">Fechar ✕</button></div>
+          <div class="mf-usa" id="mfUsaBox"><div class="small"><b>A rota usa:</b></div><div id="mfUsa" class="mf-chips"></div><div id="mfUsaNota" class="small muted"></div></div>
+          <div class="mf-tabs" role="tablist">
+            <button type="button" class="mf-tabb" data-mp="mostrar" aria-pressed="true">Mostrar</button>
+            <button type="button" class="mf-tabb" data-mp="rota" aria-pressed="false">Rota de farm</button>
+            <button type="button" class="mf-tabb" data-mp="dicas" aria-pressed="false">Dicas</button>
+          </div>
+          <div class="mf-pane" data-mp="mostrar">
+            <details open class="mf-sec"><summary>Mapa e busca</summary>
+              <div class="stack" style="gap:8px">
+                <select id="mfMapa" class="mf-sel" aria-label="Escolher o mapa" hidden></select>
+                <select id="mfGo" class="mf-sel"><option value="">Ir para um lugar…</option></select>
+                <button type="button" class="mf-btn" id="mfAlq">Comerciante de Alquimia</button>
               </div>
-              <div class="row" style="gap:10px;flex-wrap:wrap;align-items:center"><label class="small">Formato da sugestão <select id="mfRF" class="mf-sel"><option value="c">Circular (volta ao início)</option><option value="a">Eficiente (aberta, sem voltar)</option></select></label><label class="small"><input type="checkbox" id="mfRClosed" checked> Fechar esta rota (volta ao primeiro pin)</label></div>
-              <div class="mf-rg">
-                <label>Onde sugerir<select id="mfRS" class="mf-sel"><option value="tela">Só na tela</option><option value="mapa">Mapa inteiro</option></select></label>
-                <label>Tamanho máx. da rota <output id="mfRLo">1500</output><input type="range" id="mfRL" min="500" max="4000" step="100" value="1500"></label>
-                <label>Pins por rota (máx.) <output id="mfRKo">8</output><input type="range" id="mfRK" min="3" max="12" value="8"></label>
-                <label>Alcance de coleta <output id="mfRRo">60</output><input type="range" id="mfRR" min="20" max="150" value="60"></label>
-                <label>Distância máx. entre pins <output id="mfRGo">300</output><input type="range" id="mfRG" min="100" max="600" value="300" step="10"></label>
-                <label>Velocidade (unidades/s)<input type="number" id="mfRV" min="1" max="100" value="10"></label>
-                <label>Respawn (min)<input type="number" id="mfRT" min="1" max="240" value="10"></label>
-                <label>Tempo da volta (s)<span class="row" style="gap:4px"><input type="number" id="mfRCal" min="1" placeholder="medido" style="width:80px"><button type="button" class="mf-btn" id="mfRCalB">Calibrar</button></span></label>
-              </div>
-              <div class="small muted">Itens da rota: escolha um ou vários (cubo + erva + minério…). A sugestão usa só o que está ligado.</div>
-              <div id="mfRItens" class="mf-chips"></div>
-              <div id="mfRTabs" class="row" style="gap:4px;flex-wrap:wrap"></div>
-              <div id="mfRInfo" class="mf-rinfo small muted">Ligue as camadas que quer farmar, amplie numa área e toque em "Sugerir rota", ou ative "Adicionar pins" e toque no mapa. Arraste os pins para ajustar.</div>
-              <div class="row" style="gap:6px;flex-wrap:wrap">
-                <input id="mfRName" class="mf-sel" placeholder="Nome da rota" style="flex:1;min-width:120px">
-                <button type="button" class="mf-btn" id="mfRSave">Salvar</button>
-              </div>
-              <div class="row" style="gap:6px;flex-wrap:wrap">
-                <select id="mfRList" class="mf-sel" style="flex:1;min-width:120px"><option value="">Rotas salvas…</option></select>
-                <button type="button" class="mf-btn" id="mfRDel">Apagar</button>
-                <button type="button" class="mf-btn" id="mfRCopy">Copiar roteiro</button>
-              </div>
-            </div>
-          </details>
-          <details open class="mf-sec"><summary>Pets</summary>
-            <div class="stack" style="gap:8px">
-              <input id="mfPetQ" class="mf-sel" placeholder="Buscar pet pelo nome…" autocomplete="off">
-              <span id="mfPetG" class="mf-chips"></span>
-              <div id="mfPetGrid" class="mf-pets"></div>
-              <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center">
-                <button type="button" class="mf-btn" id="mfPetClr">Limpar escolhidos</button>
-                <label class="small"><input type="checkbox" id="mfCriOnly" checked> Mostrar só os escolhidos</label>
-              </div>
-              <div id="mfPetInfo" class="mf-info"></div>
-              <details><summary class="small muted" style="cursor:pointer">Buscar qualquer monstro pelo nome</summary>
-                <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px">
-                  <input id="mfCri" class="mf-sel" list="mfCriList" placeholder="Ex.: Faded Papis" autocomplete="off">
-                  <datalist id="mfCriList"></datalist>
-                  <button type="button" class="mf-btn" id="mfCriClr">Limpar</button>
-                  <span class="small muted" id="mfCriN"></span>
+            </details>
+            <details open class="mf-sec"><summary>Camadas</summary>
+              <div class="row" style="gap:6px;margin-bottom:4px"><button type="button" class="mf-btn" id="mfOff">Desligar tudo</button><button type="button" class="mf-btn" id="mfDef">Padrão</button></div>
+              <div id="mfChips"></div></details>
+            <details open class="mf-sec"><summary>Pets</summary>
+              <div class="stack" style="gap:8px">
+                <input id="mfPetQ" class="mf-sel" placeholder="Buscar pet pelo nome…" autocomplete="off">
+                <span id="mfPetG" class="mf-chips"></span>
+                <div id="mfPetGrid" class="mf-pets"></div>
+                <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center">
+                  <button type="button" class="mf-btn" id="mfPetClr">Limpar escolhidos</button>
+                  <label class="small"><input type="checkbox" id="mfCriOnly" checked> Mostrar só os escolhidos</label>
                 </div>
-                <div id="mfCriSel" class="mf-chips"></div>
-              </details>
-            </div>
-          </details>
-          <details class="mf-sec"><summary>Cubos e dicas</summary>
-            <ul class="small" style="margin:6px 0 0;padding-left:18px;display:grid;gap:4px">
-              <li><b>Cubos:</b> cada quadrado é um cubo, que aparece em 1 de vários locais possíveis (ligue "Locais possíveis de cubo"). Toque num cubo para marcar como achado. No Altgard eles precisam de <b>chave</b>.</li>
-              <li data-alt><b>Azpha e Calêndula:</b> servem para Wind Serum e Mana Potion, boas para subir Alquimia até o 51.</li>
-              <li><b>Teleportes</b> e o <b>Comerciante de Alquimia</b> (onde se compra o frasco) já vêm ligados.</li>
-            </ul>
-            <button type="button" class="mf-btn" id="mfClear" style="margin-top:8px">Limpar cubos achados</button>
-          </details>
+                <div id="mfPetInfo" class="mf-info"></div>
+              </div>
+            </details>
+            <details class="mf-sec"><summary>Monstros / criaturas</summary>
+              <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px">
+                <input id="mfCri" class="mf-sel" list="mfCriList" placeholder="Buscar monstro. Ex.: Faded Papis" autocomplete="off">
+                <datalist id="mfCriList"></datalist>
+                <button type="button" class="mf-btn" id="mfCriClr">Limpar</button>
+                <span class="small muted" id="mfCriN"></span>
+              </div>
+              <div id="mfCriSel" class="mf-chips" style="margin-top:6px"></div>
+            </details>
+          </div>
+          <div class="mf-pane" data-mp="rota" hidden>
+            <details open class="mf-sec" id="mfRotaSec"><summary>Fazer a rota</summary>
+              <div class="stack" style="gap:8px">
+                <div class="small muted">Não precisa escolher de novo: a rota usa o que está em "A rota usa" (acima), vindo das camadas, pets e monstros. Ligue ou desligue camadas aqui:</div>
+                <div id="mfRItens" class="mf-chips"></div>
+                <label class="small"><input type="checkbox" id="mfRSpots"> Incluir locais possíveis de cubo <span class="muted">(são muitos e só marcam onde um cubo pode estar)</span></label>
+                <div class="row" style="gap:6px;flex-wrap:wrap">
+                  <button type="button" class="mf-btn mf-pri" id="mfRSug">Sugerir rota</button>
+                  <button type="button" class="mf-btn" id="mfRAdd" aria-pressed="false">＋ Adicionar pins</button>
+                  <button type="button" class="mf-btn" id="mfRUndo">Desfazer pin</button>
+                  <button type="button" class="mf-btn" id="mfRClr">Remover esta rota</button>
+                  <button type="button" class="mf-btn" id="mfRClrAll">Limpar todas</button>
+                </div>
+                <div id="mfRTabs" class="row" style="gap:4px;flex-wrap:wrap"></div>
+                <div id="mfRInfo" class="mf-rinfo small muted">Ligue as camadas que quer farmar, amplie numa área e toque em "Sugerir rota", ou ative "Adicionar pins" e toque no mapa. Arraste os pins para ajustar.</div>
+              </div>
+            </details>
+            <details open class="mf-sec"><summary>Ajustes da rota</summary>
+              <div class="stack" style="gap:8px">
+                <div class="row" style="gap:10px;flex-wrap:wrap;align-items:center"><label class="small">Formato da sugestão <select id="mfRF" class="mf-sel"><option value="c">Circular (volta ao início)</option><option value="a">Eficiente (aberta, sem voltar)</option></select></label><label class="small"><input type="checkbox" id="mfRClosed" checked> Fechar esta rota (volta ao primeiro pin)</label></div>
+                <div class="mf-rg">
+                  <label>Onde sugerir<select id="mfRS" class="mf-sel"><option value="mapa">Mapa inteiro</option><option value="tela">Só na tela</option></select></label>
+                  <label>Tamanho máx. da rota <output id="mfRLo">1500</output><input type="range" id="mfRL" min="500" max="4000" step="100" value="1500"></label>
+                  <label>Pins por rota (máx.) <output id="mfRKo">8</output><input type="range" id="mfRK" min="3" max="12" value="8"></label>
+                  <label>Alcance de coleta <output id="mfRRo">60</output><input type="range" id="mfRR" min="20" max="150" value="60"></label>
+                  <label>Distância máx. entre pins <output id="mfRGo">300</output><input type="range" id="mfRG" min="100" max="600" value="300" step="10"></label>
+                  <label>Velocidade (unidades/s)<input type="number" id="mfRV" min="1" max="100" value="10"></label>
+                  <label>Respawn (min)<input type="number" id="mfRT" min="1" max="240" value="10"></label>
+                  <label>Tempo da volta (s)<span class="row" style="gap:4px"><input type="number" id="mfRCal" min="1" placeholder="medido" style="width:80px"><button type="button" class="mf-btn" id="mfRCalB">Calibrar</button></span></label>
+                </div>
+              </div>
+            </details>
+            <details open class="mf-sec"><summary>Salvar e compartilhar</summary>
+              <div class="stack" style="gap:8px">
+                <div class="row" style="gap:6px;flex-wrap:wrap">
+                  <input id="mfRName" class="mf-sel" placeholder="Nome da rota" style="flex:1;min-width:120px">
+                  <button type="button" class="mf-btn" id="mfRSave">Salvar</button>
+                </div>
+                <div class="row" style="gap:6px;flex-wrap:wrap">
+                  <select id="mfRList" class="mf-sel" style="flex:1;min-width:120px"><option value="">Rotas salvas…</option></select>
+                  <button type="button" class="mf-btn" id="mfRDel">Apagar</button>
+                  <button type="button" class="mf-btn" id="mfRCopy">Copiar roteiro</button>
+                </div>
+              </div>
+            </details>
+          </div>
+          <div class="mf-pane" data-mp="dicas" hidden>
+            <details open class="mf-sec"><summary>Cubos e dicas</summary>
+              <ul class="small" style="margin:6px 0 0;padding-left:18px;display:grid;gap:4px">
+                <li><b>Cubos:</b> cada quadrado é um cubo, que aparece em 1 de vários locais possíveis (ligue "Locais possíveis de cubo"). Toque num cubo para marcar como achado. No Altgard eles precisam de <b>chave</b>.</li>
+                <li data-alt><b>Azpha e Calêndula:</b> servem para Wind Serum e Mana Potion, boas para subir Alquimia até o 51.</li>
+                <li><b>Teleportes</b> e o <b>Comerciante de Alquimia</b> (onde se compra o frasco) já vêm ligados.</li>
+              </ul>
+              <button type="button" class="mf-btn" id="mfClear" style="margin-top:8px">Limpar cubos achados</button>
+            </details>
+          </div>
         </aside>
         <div class="mf-main">
+          <button type="button" class="mf-btn mf-open" id="mfPanelBtn" aria-expanded="true">☰ Filtros e rota</button>
           <div class="mf-wrap" id="mfWrap">
             <div class="mf-stage" id="mfStage">
               <img id="mfImg" alt="Mapa do Altgard" draggable="false" src="assets/mapa.jpg">
@@ -891,7 +915,22 @@ button{cursor:pointer}
 #mapasFarm .mf-sec .mf-sel{width:100%;box-sizing:border-box}
 #mapasFarm .mf-pets{max-height:240px}
 #mapasFarm .mf-wrap{height:calc(100vh - 150px);min-height:480px}
-@media(max-width:900px){#mapasFarm .mf-layout{grid-template-columns:1fr}#mapasFarm .mf-side{position:static;max-height:none}#mapasFarm .mf-wrap{height:72vh;min-height:360px}}
+#mapasFarm .mf-main{position:relative}
+#mapasFarm .mf-open{position:absolute;left:8px;top:8px;z-index:6;background:#fffd;color:#222;border-color:#0006}
+#mapasFarm .mf-layout.fechado{grid-template-columns:1fr}
+#mapasFarm .mf-layout.fechado .mf-side{display:none}
+#mapasFarm .mf-sh{display:none;justify-content:space-between;align-items:center}
+#mapasFarm .mf-usa{border:1px solid var(--line2,#3a3a4a);border-radius:10px;background:var(--panel2,#171722);padding:8px 10px;display:grid;gap:6px}
+#mapasFarm .mf-usa .mf-chip{padding:2px 8px;font-size:12px}
+#mapasFarm .mf-tabs{display:flex;gap:4px;position:sticky;top:0;z-index:2;background:var(--panel,#10101a);padding:2px 0}
+#mapasFarm .mf-tabb{flex:1;font:inherit;font-size:13px;font-weight:600;color:var(--fg,#eee);background:var(--panel2,#171722);border:1px solid var(--line2,#3a3a4a);border-radius:8px;padding:6px 4px;cursor:pointer}
+#mapasFarm .mf-tabb[aria-pressed=true]{border-color:#ffd25c;color:#ffd25c}
+#mapasFarm .mf-pane{display:grid;gap:8px;align-content:start}
+#mapasFarm .mf-pane[hidden]{display:none}
+#mapasFarm .mf-pri{border-color:#ffd25c;color:#ffd25c;font-weight:600}
+@media(max-width:900px){#mapasFarm .mf-layout{grid-template-columns:1fr}#mapasFarm .mf-wrap{height:calc(100vh - 170px);min-height:380px}
+ #mapasFarm .mf-side{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:68vh;z-index:60;background:var(--panel,#10101a);border-top:2px solid #ffd25c;border-radius:14px 14px 0 0;padding:10px 12px 18px;box-shadow:0 -8px 30px #000a}
+ #mapasFarm .mf-sh{display:flex}}
 #mapasFarm .mf-gd{margin-top:4px}
 #mapasFarm .mf-gd>summary{cursor:pointer;font-size:12px;opacity:.8;padding:2px 0}
 #mapasFarm .mf-rg{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:12px}
@@ -939,7 +978,7 @@ button{cursor:pointer}
   const save = () => { try { localStorage.setItem('mfCubos' + KS, JSON.stringify([...done])); } catch (e) {} };
   const fitK = () => Math.min(wrap.clientWidth / IW, wrap.clientHeight / IH);
   let raf = 0;
-  const apply = () => { stage.style.transform = `translate(${tx}px,${ty}px) scale(${k})`; if (!raf) raf = requestAnimationFrame(() => { raf = 0; scaleMarks(); clearTimeout(tTimer); tTimer = setTimeout(updTiles, 120); }); };
+  const apply = () => { stage.style.transform = `translate(${tx}px,${ty}px) scale(${k})`; if (!raf) raf = requestAnimationFrame(() => { raf = 0; scaleMarks(); clearTimeout(tTimer); tTimer = setTimeout(() => { updTiles(); updTela(); }, 120); }); };
   const clamp = () => {
     const w = wrap.clientWidth, h = wrap.clientHeight, sw = IW * k, sh = IH * k, m = 60;
     tx = Math.min(w - m, Math.max(m - sw, tx)); ty = Math.min(h - m, Math.max(m - sh, ty));
@@ -954,7 +993,7 @@ button{cursor:pointer}
     tx = (w - IW * k) / 2; ty = (h - IH * k) / 2; apply();
   };
   const el = (n, a) => { const e = document.createElementNS(NS, n); for (const x in a) e.setAttribute(x, a[x]); return e; };
-  const groups = {}, marks = []; let syncItens = () => {};
+  const groups = {}, marks = []; let syncItens = () => {}, updUsa = () => {}, updTela = () => {};
   const layG = el('g', {}), routeG = el('g', {}), lblG = el('g', {}); svg.append(layG, routeG, lblG); let routeDraw = () => {};
   const IC = window.MF_ICONS || {};
   const icoMark = (L, small) => { const g = el('g', {}), r = small ? 7 : 13;
@@ -1025,11 +1064,18 @@ button{cursor:pointer}
     $('mfAlq').hidden = !D.layers.some(l => l.id === 'alq');
     $('mfAlq').onclick = () => { const L = D.layers.find(l => l.id === 'alq'); chips.querySelectorAll('.mf-chip').forEach(b => { if (b.textContent.startsWith('Comerciante de Alquimia')) b.setAttribute('aria-pressed', 'true'); }); $('mfCriOnly').checked = false; applyVis(); scaleMarks(); syncItens(); const p = L.pts[0]; hideTip(); center(p[0], p[1], fitK() * 6); };
   $('mfClear').onclick = () => { done.clear(); save(); paintDone(); };
+  // painel único: abas (Mostrar / Rota de farm / Dicas) e abrir/fechar (barra lateral no computador, gaveta no celular)
+  const pane = n => { root.querySelectorAll('.mf-tabb').forEach(b => b.setAttribute('aria-pressed', b.dataset.mp === n ? 'true' : 'false')); root.querySelectorAll('.mf-pane').forEach(p => { p.hidden = p.dataset.mp !== n; }); };
+  root.querySelectorAll('.mf-tabb').forEach(b => { b.onclick = () => pane(b.dataset.mp); });
+  const lay = root.querySelector('.mf-layout'), mob = window.matchMedia('(max-width:900px)'), painel = on => { lay.classList.toggle('fechado', !on); $('mfPanelBtn').setAttribute('aria-expanded', on); $('mfPanelBtn').textContent = on && !mob.matches ? '◀ Esconder painel' : '☰ Filtros e rota'; };
+  painel(!mob.matches);
+  $('mfPanelBtn').onclick = () => painel(lay.classList.contains('fechado')); $('mfPanelX').onclick = () => painel(false);
+  ['mfRSug', 'mfRAdd'].forEach(i => $(i).addEventListener('click', () => setTimeout(() => { if (mob.matches && (i === 'mfRSug' || $('mfRAdd').getAttribute('aria-pressed') === 'true')) painel(false); }, 0)));   // no celular a gaveta fecha para você ver o mapa
   // pets e criaturas: o pet nasce do monstro de mesmo nome (a Alma dele vem de lá); escolha pelo nome
   const CRI = D.cri || [], criG = el('g', {}), criSel = {}, CORES = ['#ff5ca8', '#5cd1ff', '#ffd25c', '#8cff5c', '#c08cff', '#ff8c5c', '#5cffc0', '#ff5c5c'];
   svg.insertBefore(criG, lblG);
   const dl = $('mfCriList'); CRI.forEach(c => { const o = document.createElement('option'); o.value = c[0]; dl.append(o); });
-  const refreshCri = () => { applyVis(); scaleMarks(); const n = Object.keys(criSel).length; $('mfCriN').textContent = n ? n + ' selecionado(s)' : (CRI.length + ' criaturas no mapa'); };
+  const refreshCri = () => { applyVis(); scaleMarks(); const n = Object.keys(criSel).length; $('mfCriN').textContent = n ? n + ' selecionado(s)' : (CRI.length + ' criaturas no mapa'); updUsa(); };
   const addCri = (nome, ir) => {
     const c = CRI.find(x => x[0].toLowerCase() === nome.trim().toLowerCase()); if (!c || criSel[c[0]]) return false;
     const cor = CORES[Object.keys(criSel).length % CORES.length], g = el('g', {});
@@ -1128,11 +1174,11 @@ button{cursor:pointer}
   };
   // rotas de farm: várias rotas (uma por área, repartidas pelo tamanho máximo), pins arrastáveis, faixa de coleta e contagem de itens
   const ROUTES = [], CR = ['#ffd25c', '#5cd1ff', '#ff8c5c', '#8cff5c', '#c08cff', '#ff5ca8', '#5cffc0', '#ff5c5c'];
-  const RT = { pts: [], closed: true, edit: false, ativa: -1 }, dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const RT = { pts: [], closed: true, edit: false, ativa: -1 }, dist = (a, b) => { const dx = a[0] - b[0], dy = a[1] - b[1]; return Math.sqrt(dx * dx + dy * dy); };
   const scr = (x, y) => [tx + (x - X0) * SC * k, ty + (y - Y0) * SC * k];
   const val = id => +$(id).value;
   let dragW = null, dragMoved = false;
-  const segDist = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy; if (!l2) return dist(p, a); const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / l2)); return dist(p, [a[0] + t * dx, a[1] + t * dy]); };
+  const segDist = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy; let t = 0; if (l2) { t = ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / l2; t = t < 0 ? 0 : t > 1 ? 1 : t; } const ex = p[0] - a[0] - t * dx, ey = p[1] - a[1] - t * dy; return Math.sqrt(ex * ex + ey * ey); };
   const segsOf = r => { const P = r.pts, o = []; for (let i = 0; i + 1 < P.length; i++) o.push([P[i], P[i + 1]]); if (r.closed && P.length > 2) o.push([P[P.length - 1], P[0]]); return o; };
   const lenOf = r => segsOf(r).reduce((a, [p1, p2]) => a + dist(p1, p2), 0);
   // alvos da rota: pets e monstros escolhidos (se "mostrar só os escolhidos" estiver ligado) ou as camadas ligadas (cubos, ervas, minérios, Odyle, penas)
@@ -1141,12 +1187,33 @@ button{cursor:pointer}
     Object.entries(criSel).forEach(([n, c]) => extra.push({ id: 'mob:' + n, nome: n, pts: c.pts }));
     if (extra.length && $('mfCriOnly').checked) return extra;
     const on = L => chipOf[L.id] && chipOf[L.id].getAttribute('aria-pressed') === 'true', cuboOn = chipOf.cubos && chipOf.cubos.getAttribute('aria-pressed') === 'true';
-    return D.layers.filter(L => (['Cubos', 'Ervas', 'Minérios', 'Outros'].includes(L.grupo) && L.id !== 'spots' && on(L)) || (L.id === 'rastro' && on(L)) || (L.id === 'spots' && cuboOn)).concat(extra); };
+    return D.layers.filter(L => (['Cubos', 'Ervas', 'Minérios', 'Outros'].includes(L.grupo) && L.id !== 'spots' && on(L)) || (L.id === 'rastro' && on(L)) || (L.id === 'spots' && cuboOn && $('mfRSpots').checked)).concat(extra); };
   syncItens = () => { const box = $('mfRItens'); box.innerHTML = ''; D.layers.filter(L => ['Cubos', 'Ervas', 'Minérios', 'Outros'].includes(L.grupo) && L.id !== 'spots').forEach(L => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'mf-chip'; b.style.setProperty('--c', L.cor); b.setAttribute('aria-pressed', chipOf[L.id].getAttribute('aria-pressed'));
-    b.innerHTML = (IC[L.id] ? '<img src="' + IC[L.id] + '" alt="" width="16" height="16" style="border-radius:50%">' : '<i></i>') + L.nome; b.onclick = () => chipOf[L.id].click(); box.append(b); }); };
+    b.innerHTML = (IC[L.id] ? '<img src="' + IC[L.id] + '" alt="" width="16" height="16" style="border-radius:50%">' : '<i></i>') + L.nome; b.onclick = () => chipOf[L.id].click(); box.append(b); }); updUsa(); };
+  // resumo "A rota usa": mostra de onde a sugestão tira os pontos, com atalho para desligar cada fonte
+  updUsa = () => { const box = $('mfUsa'), nota = $('mfUsaNota'); box.innerHTML = ''; nota.innerHTML = '';
+    const ls = coletaveis(), temExtra = Object.keys(petSel).length + Object.keys(criSel).length > 0, so = $('mfCriOnly').checked; let tot = 0;
+    ls.forEach(L => { tot += L.pts.length; const b = document.createElement('button'); b.type = 'button'; b.className = 'mf-chip'; b.setAttribute('aria-pressed', 'true');
+      const cor = L.cor || (L.id.startsWith('pet:') ? '#ff8c5c' : '#5cd1ff'); b.style.setProperty('--c', cor);
+      const nome = L.id === 'spots' ? 'Locais possíveis de cubo' : L.nome; b.innerHTML = '<i></i>' + nome + ' <small>' + L.pts.length + '</small>' + (L.id === 'spots' ? '' : ' <span class="mf-x" title="Tirar da rota">×</span>');
+      b.title = L.id === 'spots' ? 'Incluídos porque a opção está marcada (desmarque abaixo)' : 'Tirar da rota';
+      b.onclick = () => { if (L.id === 'spots') return; if (L.id.startsWith('pet:')) { const x = petSel[L.id.slice(4)]; if (x) { delPet(x.s); drawPets(); } }
+        else if (L.id.startsWith('mob:')) { [...$('mfCriSel').children].find(c => c.textContent.startsWith(L.nome))?.click(); } else chipOf[L.id].click(); };
+      box.append(b); });
+    const farm = D.layers.filter(L => chipOf[L.id] && L.id !== 'spots' && (['Cubos', 'Ervas', 'Minérios', 'Outros'].includes(L.grupo) || L.id === 'rastro')), off = farm.filter(L => chipOf[L.id].getAttribute('aria-pressed') !== 'true' && L.pts.length);
+    const ligar = txt => { const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'mf-btn mf-pri'; bt.id = 'mfLigar'; bt.textContent = txt; bt.onclick = () => { off.forEach(L => chipOf[L.id].setAttribute('aria-pressed', 'true')); applyVis(); scaleMarks(); syncItens(); reSug(); }; return bt; };
+    if (!ls.length) { box.append(document.createTextNode('nada ainda. ')); if (off.length) { box.append(ligar('Ligar o que dá para farmar')); const o = document.createElement('span'); o.className = 'small muted'; o.textContent = ' ou escolha pets/monstros.'; box.append(o); } else box.append(document.createTextNode('Escolha pets/monstros ou outro mapa.')); }
+    else { const t = document.createElement('span'); t.className = 'small'; t.id = 'mfUsaTot'; box.append(t); updTela(); }
+    const sp = D.layers.find(L => L.id === 'spots'), cuboOn = chipOf.cubos && chipOf.cubos.getAttribute('aria-pressed') === 'true';
+    if (!so || !temExtra) { if (ls.length && ls.length < 3 && off.length) box.append(ligar('Ligar o que dá para farmar')); if (sp && cuboOn && !$('mfRSpots').checked) { const t2 = document.createElement('span'); t2.className = 'small muted'; t2.textContent = '+ ' + sp.pts.length + ' locais possíveis (fora da rota)'; box.append(t2); } }
+    if (temExtra) { nota.textContent = so ? 'Com pets/monstros escolhidos, só eles entram (as camadas ficam de fora). ' : 'Pets/monstros escolhidos entram junto com as camadas ligadas. '; const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'mf-btn'; bt.textContent = so ? 'Usar camadas também' : 'Usar só os escolhidos'; bt.onclick = () => $('mfCriOnly').click(); nota.append(bt); } };
+  const naTela = L => { const s = SC * k, x0 = X0 + (-tx / k) / SC, y0 = Y0 + (-ty / k) / SC, x1 = x0 + wrap.clientWidth / s, y1 = y0 + wrap.clientHeight / s; return L.pts.filter(q => q[0] >= x0 && q[0] <= x1 && q[1] >= y0 && q[1] <= y1).length; };
+  updTela = () => { const t = $('mfUsaTot'); if (!t) return; const ls = coletaveis(); t.innerHTML = '= <b>' + ls.reduce((a, L) => a + naTela(L), 0) + '</b> pontos na tela / <b>' + ls.reduce((a, L) => a + L.pts.length, 0) + '</b> no mapa'; };
+  try { new ResizeObserver(() => updTela()).observe(wrap); } catch (e) {}
+  $('mfRSpots').onchange = () => { updUsa(); reSug(); };
   syncItens();
-  const contar = r => { const S = segsOf(r), R = val('mfRR'); let tot = 0; const lista = coletaveis().map(L => { const n = L.pts.filter(q => (S.length ? S.some(([a, b]) => segDist(q, a, b) <= R) : r.pts.some(a => dist(q, a) <= R))).length; tot += n; return n ? L.nome + ' <b>' + n + '</b>' : ''; }).filter(Boolean); return { tot, lista }; };
+  const contar = r => { const S = segsOf(r), R = val('mfRR'); let tot = 0; const xs = r.pts.map(q => q[0]), ys = r.pts.map(q => q[1]), bx0 = Math.min(...xs) - R, bx1 = Math.max(...xs) + R, by0 = Math.min(...ys) - R, by1 = Math.max(...ys) + R; const lista = coletaveis().map(L => { const n = L.pts.filter(q => q[0] >= bx0 && q[0] <= bx1 && q[1] >= by0 && q[1] <= by1 && (S.length ? S.some(([a, b]) => segDist(q, a, b) <= R) : r.pts.some(a => dist(q, a) <= R))).length; tot += n; return n ? L.nome + ' <b>' + n + '</b>' : ''; }).filter(Boolean); return { tot, lista }; };
   const drawRoute = () => { routeG.replaceChildren(); const gap = val('mfRG');
     ROUTES.forEach((r, ri) => { const P = r.pts; if (!P.length) return; const S = P.map(q => scr(q[0], q[1])), ativa = ri === RT.ativa, fecha = r.closed && P.length > 2;
       const path = (arr, close) => arr.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ') + (close ? ' Z' : '');
@@ -1174,12 +1241,17 @@ button{cursor:pointer}
   const ativar = i => { RT.ativa = i; const r = ROUTES[i]; RT.pts = r ? r.pts : []; if (r) { RT.closed = r.closed; $('mfRClosed').checked = r.closed; } mudou(); };
   const garante = () => { if (RT.ativa < 0 || !ROUTES[RT.ativa]) { ROUTES.push({ pts: [], closed: $('mfRClosed').checked, cor: CR[ROUTES.length % CR.length] }); ativar(ROUTES.length - 1); } };
   const nativo = e => { const r = wrap.getBoundingClientRect(); return [X0 + ((e.clientX - r.left) - tx) / (SC * k), Y0 + ((e.clientY - r.top) - ty) / (SC * k)]; };
-  const addPinAt = e => { garante(); const m = e.target.closest && e.target.closest('g[data-i]'); RT.pts.push(m && m.dataset.x ? [+m.dataset.x, +m.dataset.y] : nativo(e).map(Math.round)); mudou(); };
+  const addPinAt = e => { garante(); const m = e.target.closest && e.target.closest('g[data-i]'); RT.auto = false; RT.pts.push(m && m.dataset.x ? [+m.dataset.x, +m.dataset.y] : nativo(e).map(Math.round)); mudou(); };
   const showPinTip = i => { tip.innerHTML = ''; const b = document.createElement('b'); b.textContent = 'Pin ' + (i + 1) + ' da rota ' + (RT.ativa + 1); tip.append(b);
-    const bt = document.createElement('button'); bt.type = 'button'; bt.textContent = 'Remover pin'; bt.onclick = () => { RT.pts.splice(i, 1); hideTip(); mudou(); }; tip.append(bt);
+    const bt = document.createElement('button'); bt.type = 'button'; bt.textContent = 'Remover pin'; bt.onclick = () => { RT.auto = false; RT.pts.splice(i, 1); hideTip(); mudou(); }; tip.append(bt);
     tip.hidden = false; const q = scr(RT.pts[i][0], RT.pts[i][1]); tip.style.left = Math.max(4, Math.min(wrap.clientWidth - tip.offsetWidth - 4, q[0] + 14)) + 'px'; tip.style.top = Math.max(4, Math.min(wrap.clientHeight - tip.offsetHeight - 4, q[1] - tip.offsetHeight - 14)) + 'px'; };
-  const tsp = C => { let o = C.map((_, i) => i); const L = a => a.reduce((s, v, i) => s + dist(C[v], C[a[(i + 1) % a.length]]), 0); let melhora = true;
-    while (melhora) { melhora = false; for (let i = 1; i < o.length - 1; i++) for (let j = i + 1; j < o.length; j++) { const n = o.slice(0, i).concat(o.slice(i, j + 1).reverse(), o.slice(j + 1)); if (L(n) < L(o) - 1e-6) { o = n; melhora = true; } } } return o; };
+  const tsp = C => { const o = C.map((_, i) => i), N = o.length; let melhora = true, voltas = 0;   // 2-opt com ganho calculado só nas 2 arestas trocadas
+    while (melhora && voltas++ < 60) { melhora = false; for (let i = 1; i < N - 1; i++) for (let j = i + 1; j < N; j++) { const a = C[o[i - 1]], b = C[o[i]], c = C[o[j]], d = C[o[(j + 1) % N]];
+      if (dist(a, c) + dist(b, d) < dist(a, b) + dist(c, d) - 1e-6) { for (let x = i, y = j; x < y; x++, y--) { const t = o[x]; o[x] = o[y]; o[y] = t; } melhora = true; } } } return o; };
+  // grade espacial: células de lado R, para achar só os pontos perto de um retângulo
+  const grade = (P, R) => { const m = new Map(), key = (cx, cy) => (cx + 512) * 1048576 + (cy + 512);
+    P.forEach((q, i) => { const kk = key(Math.floor(q[0] / R), Math.floor(q[1] / R)), a = m.get(kk); if (a) a.push(i); else m.set(kk, [i]); });
+    return { perto: (x0, y0, x1, y1, f) => { const cx1 = Math.floor(x1 / R), cy1 = Math.floor(y1 / R); for (let cx = Math.floor(x0 / R); cx <= cx1; cx++) for (let cy = Math.floor(y0 / R); cy <= cy1; cy++) { const a = m.get(key(cx, cy)); if (a) for (let t = 0; t < a.length; t++) f(a[t]); } } }; };
   const kmeans = (P, K) => { K = Math.min(K, P.length); const C = [P[0].slice()]; while (C.length < K) { let b = null, bd = -1; P.forEach(q => { const d = Math.min(...C.map(c => dist(q, c))); if (d > bd) { bd = d; b = q; } }); C.push(b.slice()); }
     let as = []; for (let it = 0; it < 14; it++) { as = P.map(q => { let bi = 0, bd = 1e12; C.forEach((c, i) => { const d = dist(q, c); if (d < bd) { bd = d; bi = i; } }); return bi; });
       C.forEach((c, i) => { const m = P.filter((_, j) => as[j] === i); if (m.length) { c[0] = m.reduce((a, q) => a + q[0], 0) / m.length; c[1] = m.reduce((a, q) => a + q[1], 0) / m.length; } }); }
@@ -1188,33 +1260,59 @@ button{cursor:pointer}
     const vis = new Uint8Array(P.length), gs = []; for (let i = 0; i < P.length; i++) { if (vis[i]) continue; const g = [], fila = [i]; vis[i] = 1;
       while (fila.length) { const a = fila.pop(); g.push(P[a]); const cx = Math.floor(P[a][0] / d), cy = Math.floor(P[a][1] / d);
         for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) (cel.get((cx + dx) + ',' + (cy + dy)) || []).forEach(j => { if (!vis[j] && dist(P[a], P[j]) <= d) { vis[j] = 1; fila.push(j); } }); } gs.push(g); } return gs; };
-  const rotaDe = (pts, aberta) => { const kp = Math.min(val('mfRK'), pts.length, Math.max(3, Math.round(Math.sqrt(pts.length) * 1.3))), cl = kmeans(pts, kp);
-    const pins = cl.map(x => x.m.reduce((a, q) => dist(q, x.c) < dist(a, x.c) ? q : a, x.m[0]).slice()); if (pins.length < 2) return null;
+  // rota guiada pelo alcance: 1) cobertura gulosa (cada pin cobre os itens a até R); 2) ordem pelo menor caminho; 3) tira pins que gastam caminho e rendem poucos itens
+  const rotaDe = (pts, aberta, forcar) => { const R = val('mfRR'), K = val('mfRK'), n = pts.length, G = grade(pts, R), passo = n > 300 ? Math.ceil(n / 300) : 1, cand = [];
+    for (let i = 0; i < n; i += passo) cand.push(i);
+    const lst = cand.map(ci => { const c = pts[ci], a = []; G.perto(c[0] - R, c[1] - R, c[0] + R, c[1] + R, j => { if (dist(pts[j], c) <= R) a.push(j); }); return a; }), cob = pts.map(() => []);
+    lst.forEach((a, k) => a.forEach(j => cob[j].push(k)));
+    const gain = lst.map(a => a.length), feito = new Uint8Array(n); let falta = n, pins = [];
+    while (falta && pins.length < 40) { let b = -1, bn = 0; for (let k = 0; k < gain.length; k++) if (gain[k] > bn) { bn = gain[k]; b = k; }
+      if (b < 0 || (bn < 2 && pins.length >= 2)) break; pins.push(pts[cand[b]].slice());
+      for (const j of lst[b]) if (!feito[j]) { feito[j] = 1; falta--; for (const k of cob[j]) gain[k]--; } }
+    if (forcar && pins.length > K) pins = pins.slice(0, K);   // os primeiros são os que mais cobrem
+    if (pins.length < 2) return null;
     let o = tsp(pins); if (aberta && o.length > 2) { let bi = 0, bd = -1; o.forEach((v, i) => { const d = dist(pins[v], pins[o[(i + 1) % o.length]]); if (d > bd) { bd = d; bi = i; } }); o = o.slice(bi + 1).concat(o.slice(0, bi + 1)); }
-    return { pts: o.map(i => pins[i]), closed: !aberta }; };
-  const rotasDoGrupo = (g, maxLen, aberta) => { for (let n = 1; ; n++) { const partes = n === 1 ? [g] : kmeans(g, n).map(x => x.m), rs = partes.filter(m => m.length >= 3).map(m => rotaDe(m, aberta)).filter(Boolean);
-      if (n >= 10 || rs.every(r => lenOf(r) <= maxLen * 1.15)) return rs; } };
+    let r = { pts: o.map(i => pins[i]), closed: !aberta };
+    // poda: cov[j] = quantos trechos cobrem o ponto j; ao tirar um pin só os pontos perto dos 3 trechos mudam
+    const cov = new Uint8Array(n), marca = new Int32Array(n); let carimbo = 0, base = 0;
+    const noSeg = (j, s) => segDist(pts[j], s[0], s[1]) <= R, caixa = (s, f) => G.perto(Math.min(s[0][0], s[1][0]) - R, Math.min(s[0][1], s[1][1]) - R, Math.max(s[0][0], s[1][0]) + R, Math.max(s[0][1], s[1][1]) + R, f);
+    segsOf(r).forEach(s => caixa(s, j => { if (noSeg(j, s)) cov[j]++; })); for (let j = 0; j < n; j++) if (cov[j]) base++;
+    const tira = (i, aplica) => { const P = r.pts, m = P.length, cl = r.closed, pv = i > 0 ? i - 1 : (cl ? m - 1 : -1), nx = i < m - 1 ? i + 1 : (cl ? 0 : -1), vel = [], novo = [];
+      if (pv >= 0) vel.push([P[pv], P[i]]); if (nx >= 0) vel.push([P[i], P[nx]]); if (pv >= 0 && nx >= 0) novo.push([P[pv], P[nx]]);
+      const poupa = vel.reduce((a, s) => a + dist(s[0], s[1]), 0) - novo.reduce((a, s) => a + dist(s[0], s[1]), 0); if (!aplica && poupa <= 0) return null;
+      let perde = 0; carimbo++;
+      vel.concat(novo).forEach(s0 => caixa(s0, j => { if (marca[j] === carimbo) return; marca[j] = carimbo; let d = 0; vel.forEach(s => { if (noSeg(j, s)) d--; }); novo.forEach(s => { if (noSeg(j, s)) d++; });
+        const c = cov[j], nc = c + d; if (c > 0 && nc === 0) perde++; else if (c === 0 && nc > 0) perde--; if (aplica) cov[j] = nc; }));
+      return { perde, poupa }; };
+    for (;;) { if (r.pts.length <= 3) break; const len = lenOf(r); let wi = -1, wv = Infinity;
+      r.pts.forEach((_, i) => { const e = tira(i, false); if (e) { const ef = e.perde / e.poupa; if (ef < wv) { wv = ef; wi = i; } } });
+      if (wi < 0 || wv * len >= 0.35 * base) break; const e = tira(wi, true); base -= e.perde; r = { pts: r.pts.filter((_, j) => j !== wi), closed: r.closed }; }
+    return r; };
+  const rotasDoGrupo = (g, maxLen, aberta) => { const K = val('mfRK'); for (let n = 1; ; n++) { const ult = n >= 12, partes = n === 1 ? [g] : kmeans(g, n).map(x => x.m), rs = []; let ok = true;
+      for (const m of partes) { if (m.length < 3) continue; const r = rotaDe(m, aberta, ult); if (!r) continue; rs.push(r); if (!ult && (lenOf(r) > maxLen * 1.15 || r.pts.length > K)) { ok = false; break; } }   // para na primeira parte que não cabe
+      if (ult || ok) return rs; } };
   const sugerir = () => { const ls = coletaveis(), s = SC * k, x0 = X0 + (-tx / k) / SC, y0 = Y0 + (-ty / k) / SC, x1 = x0 + wrap.clientWidth / s, y1 = y0 + wrap.clientHeight / s, P = [], tela = $('mfRS').value === 'tela';
     ls.forEach(L => L.pts.forEach(q => { if (!tela || (q[0] >= x0 && q[0] <= x1 && q[1] >= y0 && q[1] <= y1)) P.push([q[0], q[1]]); }));
-    if (P.length < 4) { $('mfRInfo').textContent = 'Escolha o que farmar (camadas ligadas, ou pets e monstros escolhidos) e amplie numa área com pelo menos 4 pontos na tela, ou escolha "Mapa inteiro".'; return; }
+    if (P.length < 4) { $('mfRInfo').textContent = !ls.length ? 'Nada para farmar ainda: ligue camadas (o botão "Ligar o que dá para farmar" em "A rota usa" faz isso) ou escolha pets e monstros.' : tela ? 'Só há ' + P.length + ' ponto(s) na tela (precisa de pelo menos 4). Amplie numa área com mais itens ou escolha "Mapa inteiro" em "Onde sugerir".' : 'Só há ' + P.length + ' ponto(s) no mapa com o que está ligado (precisa de pelo menos 4). Ligue mais camadas.'; return; }
     const aberta = $('mfRF').value === 'a', maxLen = val('mfRL'), novas = [];
     agrupa(P, val('mfRG')).filter(g => g.length >= 3).sort((a, b) => b.length - a.length).forEach(g => rotasDoGrupo(g, maxLen, aberta).forEach(r => novas.push(r)));
     if (!novas.length) { $('mfRInfo').textContent = 'Não achei áreas com itens suficientes. Aumente "Distância máx. entre pins" ou ligue mais camadas.'; return; }
     novas.forEach(r => { r.n = contar(r).tot; }); novas.sort((x, y) => y.n - x.n); const boas = novas.filter(r => r.n >= 5);   // rotas com poucos itens ficam de fora
-    ROUTES.length = 0; (boas.length ? boas : novas).slice(0, 40).forEach((r, i) => { r.cor = CR[i % CR.length]; ROUTES.push(r); }); ativar(0); };
+    const ant = RT.ativa; ROUTES.length = 0; (boas.length ? boas : novas).slice(0, 40).forEach((r, i) => { r.cor = CR[i % CR.length]; ROUTES.push(r); }); RT.auto = true; ativar(Math.max(0, Math.min(ant, ROUTES.length - 1))); };
+  const reSug = () => { if (!RT.auto) return; clearTimeout(window.__mfReSug); window.__mfReSug = setTimeout(sugerir, 200); };   // rota sugerida acompanha os controles; se você mexeu nos pins, ela fica como está
   $('mfRAdd').onclick = () => { RT.edit = !RT.edit; $('mfRAdd').setAttribute('aria-pressed', RT.edit); wrap.classList.toggle('edit', RT.edit); };
   $('mfRSug').onclick = sugerir;
-  $('mfRUndo').onclick = () => { if (RT.pts.length) RT.pts.pop(); hideTip(); mudou(); };
-  $('mfRClr').onclick = () => { if (RT.ativa < 0) return; ROUTES.splice(RT.ativa, 1); hideTip(); ativar(ROUTES.length ? Math.min(RT.ativa, ROUTES.length - 1) : -1); };
-  $('mfRClrAll').onclick = () => { ROUTES.length = 0; hideTip(); ativar(-1); };
+  $('mfRUndo').onclick = () => { RT.auto = false; if (RT.pts.length) RT.pts.pop(); hideTip(); mudou(); };
+  $('mfRClr').onclick = () => { if (RT.ativa < 0) return; RT.auto = false; ROUTES.splice(RT.ativa, 1); hideTip(); ativar(ROUTES.length ? Math.min(RT.ativa, ROUTES.length - 1) : -1); };
+  $('mfRClrAll').onclick = () => { RT.auto = false; ROUTES.length = 0; hideTip(); ativar(-1); };
   $('mfRClosed').onchange = e => { RT.closed = e.target.checked; if (ROUTES[RT.ativa]) ROUTES[RT.ativa].closed = RT.closed; mudou(); };
-  [['mfRK', 'mfRKo'], ['mfRR', 'mfRRo'], ['mfRG', 'mfRGo'], ['mfRL', 'mfRLo']].forEach(([a, b]) => { $(a).oninput = () => { $(b).textContent = $(a).value; mudou(); }; });
+  [['mfRK', 'mfRKo'], ['mfRR', 'mfRRo'], ['mfRG', 'mfRGo'], ['mfRL', 'mfRLo']].forEach(([a, b]) => { $(a).oninput = () => { $(b).textContent = $(a).value; mudou(); }; $(a).onchange = reSug; });   // a rota só é refeita ao soltar o controle
   ['mfRV', 'mfRT'].forEach(a => { $(a).oninput = stats; });
   $('mfRCalB').onclick = () => { const t = val('mfRCal'), r = ROUTES[RT.ativa], len = r ? lenOf(r) : 0; if (t > 0 && len) { $('mfRV').value = (len / t).toFixed(1); stats(); } };
   const guarda = () => { try { return JSON.parse(localStorage.getItem('mfRotas' + KS) || '{}'); } catch (e) { return {}; } };
   const listaRotas = () => { const sel = $('mfRList'), g = guarda(); sel.length = 1; Object.keys(g).forEach(n => { const o = document.createElement('option'); o.value = o.textContent = n; sel.append(o); }); };
   $('mfRSave').onclick = () => { const n = $('mfRName').value.trim(); if (!n || !ROUTES.length) return; const g = guarda(); g[n] = { rotas: ROUTES.map(r => ({ pts: r.pts, closed: r.closed, cor: r.cor })) }; try { localStorage.setItem('mfRotas' + KS, JSON.stringify(g)); } catch (e) {} listaRotas(); $('mfRList').value = n; };
-  $('mfRList').onchange = e => { const r = guarda()[e.target.value]; if (!r) return; const rs = r.rotas || [{ pts: r.pts, closed: r.closed }]; ROUTES.length = 0; rs.forEach((x, i) => ROUTES.push({ pts: x.pts.map(q => q.slice()), closed: x.closed, cor: x.cor || CR[i % CR.length] })); $('mfRName').value = e.target.value; ativar(0); };
+  $('mfRList').onchange = e => { const r = guarda()[e.target.value]; if (!r) return; RT.auto = false; const rs = r.rotas || [{ pts: r.pts, closed: r.closed }]; ROUTES.length = 0; rs.forEach((x, i) => ROUTES.push({ pts: x.pts.map(q => q.slice()), closed: x.closed, cor: x.cor || CR[i % CR.length] })); $('mfRName').value = e.target.value; ativar(0); };
   $('mfRDel').onclick = () => { const n = $('mfRList').value, g = guarda(); if (!n) return; delete g[n]; try { localStorage.setItem('mfRotas' + KS, JSON.stringify(g)); } catch (e) {} listaRotas(); };
   $('mfRCopy').onclick = () => { const tele = (D.layers.find(l => l.id === 'tele') || { pts: [] }).pts, v = Math.max(1, val('mfRV'));
     const txt = ROUTES.map((r, ri) => { const len = lenOf(r), linhas = r.pts.map((q, i) => { const rg = D.labels.reduce((a, l) => dist(q, [l[1], l[2]]) < dist(q, [a[1], a[2]]) ? l : a, D.labels[0]), tp = tele.reduce((a, t) => dist(q, t) < dist(q, a) ? t : a, tele[0]);
@@ -1228,7 +1326,7 @@ button{cursor:pointer}
   const ptrs = new Map(); let sx0 = 0, sy0 = 0, dist0 = 0;
   wrap.addEventListener('pointerdown', e => { if (e.target.closest('.mf-ctl,.mf-tip')) return; const pw = e.target.closest && e.target.closest('g[data-w]'); if (pw) { const rr = +pw.dataset.r; if (rr !== RT.ativa) { ativar(rr); return; } dragW = +pw.dataset.w; dragMoved = false; wrap.setPointerCapture(e.pointerId); return; } wrap.setPointerCapture(e.pointerId); ptrs.set(e.pointerId, [e.clientX, e.clientY]); moved = false; sx0 = e.clientX; sy0 = e.clientY;
     if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; dist0 = Math.hypot(a[0] - b[0], a[1] - b[1]); } });
-  wrap.addEventListener('pointermove', e => { if (dragW !== null) { dragMoved = true; RT.pts[dragW] = nativo(e).map(Math.round); hideTip(); drawRoute(); return; } if (!ptrs.has(e.pointerId)) return; const o = ptrs.get(e.pointerId); const r = wrap.getBoundingClientRect();
+  wrap.addEventListener('pointermove', e => { if (dragW !== null) { dragMoved = true; RT.auto = false; RT.pts[dragW] = nativo(e).map(Math.round); hideTip(); drawRoute(); return; } if (!ptrs.has(e.pointerId)) return; const o = ptrs.get(e.pointerId); const r = wrap.getBoundingClientRect();
     if (ptrs.size === 1) { const dx = e.clientX - o[0], dy = e.clientY - o[1]; if (Math.abs(e.clientX - sx0) + Math.abs(e.clientY - sy0) > 6) moved = true; if (moved) { touched = true; tx += dx; ty += dy; clamp(); apply(); hideTip(); } ptrs.set(e.pointerId, [e.clientX, e.clientY]); }
     else if (ptrs.size === 2) { ptrs.set(e.pointerId, [e.clientX, e.clientY]); const [a, b] = [...ptrs.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]); if (dist0) zoomAt(d / dist0, (a[0] + b[0]) / 2 - r.left, (a[1] + b[1]) / 2 - r.top); dist0 = d; moved = true; hideTip(); } });
   const up = e => { ptrs.delete(e.pointerId); dist0 = 0; };
@@ -1246,7 +1344,7 @@ button{cursor:pointer}
   };
   // troca de mapa: refaz o painel; o arquivo do mapa é carregado na primeira vez (funciona também por file://)
   const abrir = (id, antes) => {
-    const ir = () => { setTimeout(() => { root.innerHTML = TPL; boot(MAPS[id], id); esperaImg(); }, 30); };   // 30 ms: deixa a telinha de carregando aparecer antes do trabalho pesado
+    const ir = () => { clearTimeout(window.__mfReSug); setTimeout(() => { root.innerHTML = TPL; boot(MAPS[id], id); esperaImg(); }, 30); };   // 30 ms: deixa a telinha de carregando aparecer antes do trabalho pesado
     carrega(true);
     if (MAPS[id]) return ir();
     const sel = $('mfMapa'); sel.disabled = true;
