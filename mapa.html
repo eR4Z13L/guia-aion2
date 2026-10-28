@@ -434,6 +434,14 @@ button{cursor:pointer}
   .gtab>:nth-child(4n+3){grid-column:2;text-align:right;white-space:nowrap;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
   .keys>:not(.key){grid-column:1/-1}
 }
+/* patch 25: cartões de estigma e etapas de equipamento mais claros */
+.sk{transition:border-color .15s}.sk:hover{border-color:var(--violet)}
+.skhead{grid-template-columns:56px 1fr auto}.skhead img{width:56px;height:56px;border-radius:9px}
+.stage{transition:border-color .15s}.stage:hover,.stage[open]{border-color:var(--line2)}
+.stage summary{cursor:pointer;padding:2px 0;min-height:36px}
+.gic{width:34px;height:34px}
+.gslot{font-family:var(--display);font-weight:600}
+@media (max-width:640px){.skhead{grid-template-columns:48px 1fr auto}.skhead img{width:48px;height:48px}.stage{padding:12px}}
 </style>
 
 <style>
@@ -450,7 +458,7 @@ button{cursor:pointer}
 .snav .cls::after{content:"▸";color:#9298a8;transition:transform .15s}.snav .cls.open::after{transform:rotate(90deg)}
 .snav .bl{display:flex;gap:6px;padding:2px 8px 8px}.snav .bl a{flex:1;text-align:center;color:#cdb8ff;background:#1b1f2b;border:1px solid #2a3040}
 .snav .bl a:hover,.snav .bl a.on{background:#a47cff33;color:#fff}
-@media(max-width:560px){.snav{padding:0 8px;min-height:46px;font-size:14px}.snav .dd{position:static}.snav a,.snav button{padding:8px 9px}.snav .brand span{display:none}.snav .ddp{left:8px;right:8px}}
+@media(max-width:560px){.snav{padding:0 8px;min-height:46px;font-size:14px}.snav .dd{position:static}.snav{position:relative}.snav a,.snav button{padding:8px 9px}.snav .brand span{display:none}.snav .ddp{left:8px;right:8px}}
 </style><nav class="snav"><a class="brand" href="index.html"><i></i><span>Guia Aion 2</span></a><div class="dd"><button type="button" id="snC">Guias das classes ▾</button><div class="ddp" hidden><button type="button" class="cls">Assassino</button><div class="bl" hidden><a href="guia-assassino-pve.html">PvE</a><a href="guia-assassino-pvp.html">PvP</a></div><button type="button" class="cls">Templar</button><div class="bl" hidden><a href="guia-templar-pve.html">PvE</a></div></div></div><a href="geral.html">Guia geral</a><a href="tarefas.html">Tarefas</a><a href="mapa.html" class=on>Mapa</a><a href="dicas.html">Dicas</a><a href="ferramentas.html">Ferramentas</a></nav><script>(()=>{const c=document.getElementById("snC"),p=c.nextElementSibling;c.onclick=e=>{e.stopPropagation();p.hidden=!p.hidden};p.querySelectorAll(".cls").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=b.nextElementSibling;const o=l.hidden;p.querySelectorAll(".bl").forEach(x=>x.hidden=true);l.hidden=!o;p.querySelectorAll(".cls").forEach(x=>x.classList.remove("open"));if(o)b.classList.add("open")});document.addEventListener("click",()=>{p.hidden=true});document.addEventListener("keydown",e=>{if(e.key=="Escape")p.hidden=true});const on=p.querySelector(".bl a.on");if(on){on.parentNode.hidden=false;on.parentNode.previousElementSibling.classList.add("open")}})();</script><script src="assets/aviso.js" defer></script>
 <div class="wrap">
   <header class="hero">
@@ -1038,7 +1046,7 @@ button{cursor:pointer}
   };
   const el = (n, a) => { const e = document.createElementNS(NS, n); for (const x in a) e.setAttribute(x, a[x]); return e; };
   const groups = {}, marks = []; let syncItens = () => {}, updUsa = () => {}, updTela = () => {};
-  const layG = el('g', {}), routeG = el('g', {}), lblG = el('g', {}); svg.append(layG, routeG, lblG); let routeDraw = () => {};
+  const layG = el('g', {}), routeG = el('g', {}), prontaG = el('g', {}), lblG = el('g', {}); svg.append(layG, prontaG, routeG, lblG); let routeDraw = () => {};
   const IC = window.MF_ICONS || {};
   const icoMark = (L, small) => { const g = el('g', {}), r = small ? 7 : 13;
     g.append(el('circle', { r: r, fill: '#000a', stroke: L.id === 'alq' ? '#ff5c8a' : L.cor, 'stroke-width': L.id === 'alq' ? 3 : 1.5 }));
@@ -1100,7 +1108,12 @@ button{cursor:pointer}
   const lb2 = document.createElement('button'); lb2.type = 'button'; lb2.className = 'mf-chip'; lb2.style.setProperty('--c', '#fff');
   lb2.setAttribute('aria-pressed', 'true'); lb2.innerHTML = '<i></i>Nomes dos locais (zoom bem perto)';
   lb2.onclick = () => { lb2On = lb2.getAttribute('aria-pressed') !== 'true'; lb2.setAttribute('aria-pressed', lb2On); scaleMarks(); };
-  const gl = document.createElement('div'); gl.className = 'mf-g'; gl.innerHTML = '<b>Mapa</b><div class="mf-chips"></div>'; gl.lastChild.append(lb, lb2); chips.append(gl);
+  const gl = document.createElement('div'); gl.className = 'mf-g'; gl.innerHTML = '<b>Mapa</b><div class="mf-chips"></div>'; gl.lastChild.append(lb, lb2);
+  const lp = document.createElement('button'); lp.type = 'button'; lp.className = 'mf-chip'; lp.style.setProperty('--c', '#5cffc0'); lp.setAttribute('aria-pressed', 'false'); lp.hidden = !D.layers.some(L => L.id !== 'spots' && ['Cubos', 'Ervas', 'Minérios', 'Outros'].includes(L.grupo) && L.pts.length >= 4);
+  lp.innerHTML = '<i></i>Rotas prontas (cubos e ervas)'; lp.title = 'Rotas sugeridas, com alcance de 60: clique numa rota para carregá-la e editar';
+  lp.onclick = () => { if (prontaOn) { prontaOn = false; lp.setAttribute('aria-pressed', 'false'); drawProntas(); return; }
+    lp.setAttribute('aria-pressed', 'true'); lp.lastChild.textContent = 'Rotas prontas: calculando…'; setTimeout(() => { prontaOn = true; PRONTAS = calcProntas(); lp.lastChild.textContent = 'Rotas prontas (cubos e ervas)'; lp.innerHTML = '<i></i>Rotas prontas (cubos e ervas) <small>' + PRONTAS.length + '</small>'; drawProntas(); }, 30); };
+  gl.lastChild.append(lp); chips.append(gl);
   // ir para
   const go = $('mfGo'); D.labels.slice().sort((a, b) => a[0].localeCompare(b[0])).forEach(l => { const o = document.createElement('option'); o.value = l[1] + ',' + l[2]; o.textContent = l[0]; go.append(o); });
   const center = (x, y, z) => { touched = true; const w = wrap.clientWidth, h = wrap.clientHeight; k = Math.min(kMax, z); tx = w / 2 - (x - X0) * SC * k; ty = h / 2 - (y - Y0) * SC * k; clamp(); apply(); };
@@ -1220,13 +1233,14 @@ button{cursor:pointer}
   const ROUTES = [], CR = ['#ffd25c', '#5cd1ff', '#ff8c5c', '#8cff5c', '#c08cff', '#ff5ca8', '#5cffc0', '#ff5c5c'];
   const RT = { pts: [], closed: true, edit: false, ativa: -1 }, dist = (a, b) => { const dx = a[0] - b[0], dy = a[1] - b[1]; return Math.sqrt(dx * dx + dy * dy); };
   const scr = (x, y) => [tx + (x - X0) * SC * k, ty + (y - Y0) * SC * k];
-  const val = id => +$(id).value;
+  let PAR = null, ALVOS = null;   // PAR/ALVOS: parâmetros e alvos fixos usados só ao calcular as rotas prontas
+  const val = id => PAR && id in PAR ? PAR[id] : +$(id).value;
   let dragW = null, dragMoved = false;
   const segDist = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy; let t = 0; if (l2) { t = ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / l2; t = t < 0 ? 0 : t > 1 ? 1 : t; } const ex = p[0] - a[0] - t * dx, ey = p[1] - a[1] - t * dy; return Math.sqrt(ex * ex + ey * ey); };
   const segsOf = r => { const P = r.pts, o = []; for (let i = 0; i + 1 < P.length; i++) o.push([P[i], P[i + 1]]); if (r.closed && P.length > 2) o.push([P[P.length - 1], P[0]]); return o; };
   const lenOf = r => segsOf(r).reduce((a, [p1, p2]) => a + dist(p1, p2), 0);
   // alvos da rota: pets e monstros escolhidos (se "mostrar só os escolhidos" estiver ligado) ou as camadas ligadas (cubos, ervas, minérios, Odyle, penas)
-  const coletaveis = () => { const extra = [];
+  const coletaveis = () => { if (ALVOS) return ALVOS; const extra = [];
     Object.values(petSel).forEach(x => extra.push({ id: 'pet:' + x.s.s, nome: x.s.n, pts: x.s.m.flatMap(m => m[1]) }));
     Object.entries(criSel).forEach(([n, c]) => extra.push({ id: 'mob:' + n, nome: n, pts: c.pts }));
     if (extra.length && $('mfCriOnly').checked) return extra;
@@ -1258,7 +1272,28 @@ button{cursor:pointer}
   $('mfRSpots').onchange = () => { updUsa(); reSug(); };
   syncItens();
   const contar = r => { const S = segsOf(r), R = val('mfRR'); let tot = 0; const xs = r.pts.map(q => q[0]), ys = r.pts.map(q => q[1]), bx0 = Math.min(...xs) - R, bx1 = Math.max(...xs) + R, by0 = Math.min(...ys) - R, by1 = Math.max(...ys) + R; const lista = coletaveis().map(L => { const n = L.pts.filter(q => q[0] >= bx0 && q[0] <= bx1 && q[1] >= by0 && q[1] <= by1 && (S.length ? S.some(([a, b]) => segDist(q, a, b) <= R) : r.pts.some(a => dist(q, a) <= R))).length; tot += n; return n ? L.nome + ' <b>' + n + '</b>' : ''; }).filter(Boolean); return { tot, lista }; };
-  const drawRoute = () => { routeG.replaceChildren(); const gap = val('mfRG');
+  // rotas prontas: rotas sugeridas (alcance 60, mapa inteiro, circulares, até 8 pins) de cubos e de ervas/minérios; calculadas no navegador na primeira vez que a camada liga
+  let prontaOn = false, PRONTAS = null;
+  const GRUPOS_P = [['Cubos', ['Cubos'], ['#ffd25c', '#ffb347', '#ffe68a', '#ff9f43']], ['Ervas e minérios', ['Ervas', 'Minérios', 'Outros'], ['#5cffc0', '#8cff5c', '#5cd1ff', '#c08cff']]];
+  const calcProntas = () => { const cache = window.__mfPr = window.__mfPr || {}; if (cache[MID]) return cache[MID];
+    const out = [], antV = PAR, antA = ALVOS; PAR = { mfRR: 60, mfRK: 8, mfRG: 300, mfRL: 1500 };
+    try { GRUPOS_P.forEach(([nome, gs, cores]) => { const ls = D.layers.filter(L => gs.includes(L.grupo) && L.id !== 'spots' && L.pts.length), P = []; ls.forEach(L => L.pts.forEach(q => P.push([q[0], q[1]]))); if (P.length < 4) return; ALVOS = ls;
+        const novas = []; agrupa(P, 300).filter(g => g.length >= 3).sort((a, b) => b.length - a.length).forEach(g => rotasDoGrupo(g, 1500, false).forEach(r => novas.push(r)));
+        novas.forEach(r => { r.n = contar(r).tot; }); novas.sort((x, y) => y.n - x.n); const boas = novas.filter(r => r.n >= 5);
+        (boas.length ? boas : novas).slice(0, 40).forEach((r, i) => { r.cor = cores[i % cores.length]; r.set = nome; out.push(r); }); }); }
+    finally { PAR = antV; ALVOS = antA; }
+    return cache[MID] = out; };
+  const drawProntas = () => { prontaG.replaceChildren(); if (!prontaOn || !PRONTAS) return;
+    PRONTAS.forEach((r, ri) => { const S = r.pts.map(q => scr(q[0], q[1])), d = S.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ') + (r.closed && S.length > 2 ? ' Z' : '');
+      const g = el('g', { 'data-p': ri, style: 'cursor:pointer' }), tt = el('title', {}); tt.textContent = r.set + ': rota pronta ' + (ri + 1) + ' · ' + r.pts.length + ' pins · ' + r.n + ' itens · clique para editar'; g.append(tt);
+      g.append(el('path', { d, fill: 'none', stroke: r.cor, 'stroke-width': 2.2, 'stroke-opacity': .85, 'stroke-linejoin': 'round' }));
+      g.append(el('path', { d, fill: 'none', stroke: 'transparent', 'stroke-width': 14, 'pointer-events': 'stroke' }));
+      S.forEach((q, i) => { const c = el('g', { transform: 'translate(' + q[0].toFixed(1) + ' ' + q[1].toFixed(1) + ')' }); c.append(el('circle', { r: 7, fill: '#1b1b28', stroke: r.cor, 'stroke-width': 1.8 }));
+        const x = el('text', { 'text-anchor': 'middle', y: 3, fill: '#fff', 'font-size': 9, 'font-weight': 700, 'pointer-events': 'none' }); x.textContent = i + 1; c.append(x); g.append(c); });
+      prontaG.append(g); }); };
+  const carregaPronta = ri => { const r = PRONTAS && PRONTAS[ri]; if (!r) return; RT.auto = false; ROUTES.push({ pts: r.pts.map(q => q.slice()), closed: r.closed, cor: r.cor }); hideTip(); ativar(ROUTES.length - 1);
+    const b = root.querySelector('.mf-tabb[data-mp="rota"]'); if (b) b.click(); };
+  const drawRoute = () => { routeG.replaceChildren(); drawProntas(); const gap = val('mfRG');
     ROUTES.forEach((r, ri) => { const P = r.pts; if (!P.length) return; const S = P.map(q => scr(q[0], q[1])), ativa = ri === RT.ativa, fecha = r.closed && P.length > 2;
       const path = (arr, close) => arr.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ') + (close ? ' Z' : '');
       if (P.length > 1) { if (ativa) routeG.append(el('path', { d: path(S, fecha), fill: 'none', stroke: r.cor, 'stroke-opacity': .14, 'stroke-width': Math.max(6, 2 * val('mfRR') * SC * k), 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
@@ -1374,7 +1409,7 @@ button{cursor:pointer}
     if (ptrs.size === 1) { const dx = e.clientX - o[0], dy = e.clientY - o[1]; if (Math.abs(e.clientX - sx0) + Math.abs(e.clientY - sy0) > 6) moved = true; if (moved) { touched = true; tx += dx; ty += dy; clamp(); apply(); hideTip(); } ptrs.set(e.pointerId, [e.clientX, e.clientY]); }
     else if (ptrs.size === 2) { ptrs.set(e.pointerId, [e.clientX, e.clientY]); const [a, b] = [...ptrs.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]); if (dist0) zoomAt(d / dist0, (a[0] + b[0]) / 2 - r.left, (a[1] + b[1]) / 2 - r.top); dist0 = d; moved = true; hideTip(); } });
   const up = e => { ptrs.delete(e.pointerId); dist0 = 0; };
-  wrap.addEventListener('pointerup', e => { if (dragW !== null) { const w = dragW; dragW = null; if (dragMoved) stats(); else showPinTip(w); return; } const was = moved; up(e); if (was) return; if (RT.edit) { addPinAt(e); return; } const m = e.target.closest && e.target.closest('g[data-i]'); if (m && m.parentNode.style.display !== 'none') showTip(m); else hideTip(); });
+  wrap.addEventListener('pointerup', e => { if (dragW !== null) { const w = dragW; dragW = null; if (dragMoved) stats(); else showPinTip(w); return; } const was = moved; up(e); if (was) return; const hp = prontaOn && document.elementFromPoint(e.clientX, e.clientY); const pg = hp && hp.closest && hp.closest('g[data-p]'); if (pg && !RT.edit) { carregaPronta(+pg.dataset.p); return; } if (RT.edit) { addPinAt(e); return; } const m = e.target.closest && e.target.closest('g[data-i]'); if (m && m.parentNode.style.display !== 'none') showTip(m); else hideTip(); });
   wrap.addEventListener('pointercancel', up);
   wrap.addEventListener('wheel', e => { e.preventDefault(); const r = wrap.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.25 : .8, e.clientX - r.left, e.clientY - r.top); hideTip(); }, { passive: false });
   const c0 = () => [wrap.clientWidth / 2, wrap.clientHeight / 2];
