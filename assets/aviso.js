@@ -9,7 +9,7 @@
     { id: 'night', t: 'Nightmare', n: 2 }, { id: 'dd', t: 'Daily Dungeon', n: 2 }, { id: 'conq', t: 'Conquest' },
     { id: 'shugo', t: 'Shugo Festival', n: 3 }, { id: 'dimi', t: 'Dimensional Invasion' }
   ];
-  let S = { d: '', w: '', daily: {}, weekly: {}, lvl: 45, il: 0 }, cfg = { on: true };
+  let S = { d: '', w: '', daily: {}, weekly: {}, lvl: 45, il: 0 }, cfg = { on: true, nat: false, sempre: false };
   const ler = () => { try { Object.assign(S, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {} try { Object.assign(cfg, JSON.parse(localStorage.getItem(CFG) || '{}')); } catch (e) {} };
   const gday = (d = new Date()) => new Date(d.getTime() - RESET_H * 3600e3);
   const dayKey = () => gday().toISOString().slice(0, 10);
@@ -76,9 +76,15 @@
   };
 
   let visto = {}, aberto = false;
+  // aviso do sistema (Windows) + som: só com a aba em segundo plano, a menos que 'sempre' esteja ligado
+  let ac = null;
+  const bipe = () => { try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === 'suspended') ac.resume(); [660, 880, 1100].forEach((f, i) => { const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + i * .16; o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.25, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .15); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + .16); }); } catch (x) {} };
+  const sistema = (e, k) => { if (!cfg.nat || !('Notification' in window) || Notification.permission !== 'granted') return; if (!cfg.sempre && !document.hidden && document.hasFocus()) return;
+    try { const n = new Notification(e.t, { body: e.d, tag: k, icon: e.img ? SRC + 'aviso/' + e.img : undefined, silent: true }); n.onclick = () => { window.focus(); n.close(); }; setTimeout(() => n.close(), 15000); } catch (x) {} bipe(); };
   const toast = (e) => {
-    if (!cfg.on || aberto) return; const k = e.k + ':' + new Date().toISOString().slice(0, 13) + (e.k === 'dimi' ? new Date().getMinutes() >= 25 : '');
-    if (visto[k]) return; visto[k] = 1;
+    if (!cfg.on) return; const k = e.k + ':' + new Date().toISOString().slice(0, 13) + (e.k === 'dimi' ? new Date().getMinutes() >= 25 : '');
+    if (visto[k]) return; visto[k] = 1; sistema(e, k);
+    if (aberto) return;
     const t = $('avT'); t.innerHTML = '<b>' + e.t + '</b>' + e.d + '<br><span style="color:#9298a8">Toque na bolinha para abrir a lista</span>'; t.hidden = false; posiciona(); setTimeout(() => { t.hidden = true; }, 9000);
   };
   const desenhaLista = () => {
@@ -93,6 +99,8 @@
       h += '<label data-i="' + i.id + '"><input type="checkbox"' + (ok ? ' checked' : '') + '><span class="' + (ok ? 'ok' : '') + '">' + i.t + '</span>' + (n > 1 ? '<span class="c"><button type="button" data-m="-1" aria-label="Menos">−</button>' + v + '/' + n + '<button type="button" data-m="1" aria-label="Mais">+</button></span>' : '') + '</label>'; });
       h += '</div>'; }
     h += '<div class="avF2"><a href="' + SRC.replace(/assets\/$/, '') + 'tarefas.html">Abrir todas as tarefas →</a><button type="button" id="avCfg">Avisos: ' + (cfg.on ? 'ligados' : 'desligados') + '</button></div>';
+    const np = !('Notification' in window) ? 'sem suporte' : Notification.permission === 'denied' ? 'bloqueado no navegador' : cfg.nat && Notification.permission === 'granted' ? 'ligado' : 'desligado';
+    h += '<div class="avF2"><button type="button" id="avNat">Avisos do Windows + som: ' + np + '</button>' + (cfg.nat ? '<button type="button" id="avSem">' + (cfg.sempre ? 'sempre' : 'só em 2º plano') + '</button>' : '') + '</div>';
     el.innerHTML = h;
     el.querySelectorAll('label[data-i]').forEach(l => {
       const i = ITENS.find(x => x.id === l.dataset.i), n = i.n || 1;
@@ -100,6 +108,11 @@
         if (n > 1) { if (b) v = Math.max(0, Math.min(n, v + +b.dataset.m)); else v = v >= n ? 0 : n; } else v = v ? 0 : 1;
         ler(); rolar(); S.daily[i.id] = v; gravar(); desenhaLista(); marca(); };
     });
+    const sv = () => { try { localStorage.setItem(CFG, JSON.stringify(cfg)); } catch (e) {} };
+    $('avNat').onclick = async () => { if (!('Notification' in window)) return; if (cfg.nat) { cfg.nat = false; sv(); return desenhaLista(); }
+      let p = Notification.permission; if (p === 'default') p = await Notification.requestPermission();
+      if (p === 'granted') { cfg.nat = true; sv(); bipe(); try { new Notification('Avisos ligados', { body: 'Você será avisado dos eventos e do reset com a aba em segundo plano.', silent: true }); } catch (x) {} } desenhaLista(); };
+    if ($('avSem')) $('avSem').onclick = () => { cfg.sempre = !cfg.sempre; sv(); desenhaLista(); };
     $('avCfg').onclick = () => { cfg.on = !cfg.on; try { localStorage.setItem(CFG, JSON.stringify(cfg)); } catch (e) {} desenhaLista(); };
   };
   const marca = () => { // número da bolinha e ícone do evento
