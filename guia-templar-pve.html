@@ -814,6 +814,7 @@ button{cursor:pointer}
                 <select id="mfDropMin" class="mf-sel" aria-label="Chance mínima"></select>
                 <button type="button" class="mf-btn" id="mfDropGo">Mostrar spawns</button>
                 <span class="small muted" id="mfDropN" style="flex-basis:100%"></span>
+                <ul id="mfDropL" class="small" style="flex-basis:100%;margin:2px 0 0;padding-left:18px;max-height:220px;overflow:auto"></ul>
               </div>
               <div id="mfCriSel" class="mf-chips" style="margin-top:6px"></div>
             </details>
@@ -1120,7 +1121,9 @@ button{cursor:pointer}
   if (Object.keys(DROPS).length) { $('mfDrop').hidden = false; Object.keys(DROPS).forEach(i => { const o = document.createElement('option'); o.value = i; o.textContent = i; dpItem.append(o); }); dpItem.onchange = dpOpts; dpOpts();
     $('mfDropGo').onclick = () => { const item = dpItem.value, min = +dpMin.value, pts = dpPts(item, min), key = 'Drop: ' + item + ' ≥' + pct(min);
       [...$('mfCriSel').children].filter(b => (b.dataset.k || '').startsWith('Drop: ' + item)).forEach(b => b.click());
+      const lst = $('mfDropL'); lst.innerHTML = '';
       if (!pts.length) { $('mfDropN').textContent = 'Nenhum monstro desse item neste mapa.'; return; }
+      (DROPS[item] || []).filter(x => x[1] >= min).forEach(([n, ch]) => { const c = CRI.find(x => x[0] === n), li = document.createElement('li'); li.textContent = n + ' — ' + pct(ch) + ' · ' + (c ? c[1].length : 0) + ' pontos'; lst.append(li); });
       addSel(key, pts, true, 'Drop: ' + item + ' (' + pct(min) + '+)'); $('mfDropN').textContent = (DROPS[item].filter(x => x[1] >= min).length) + ' monstros, ' + pts.length + ' pontos. Entram em "A rota usa". Fonte: tabelas de drop do allthings.how (cliente não informado).'; }; }
   $('mfCri').addEventListener('change', e => { if (addCri(e.target.value, true)) e.target.value = ''; });
   $('mfCri').addEventListener('keydown', e => { if (e.key === 'Enter' && addCri(e.target.value, true)) e.target.value = ''; });
