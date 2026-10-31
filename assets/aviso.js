@@ -9,6 +9,7 @@
     { id: 'night', t: 'Nightmare', n: 2 }, { id: 'dd', t: 'Daily Dungeon', n: 2 }, { id: 'conq', t: 'Conquest' },
     { id: 'shugo', t: 'Shugo Festival', n: 3 }, { id: 'dimi', t: 'Dimensional Invasion' }
   ];
+  const DI_ON = false;   // Dimensional Invasion: o horário :30 vem de fontes de terceiros (Coreia/Taiwan) e já avisou sem estar acontecendo no Global; fica sem aviso até alguém confirmar o horário no jogo
   let S = { d: '', w: '', daily: {}, weekly: {}, lvl: 45, il: 0 }, cfg = { on: true, nat: false, sempre: false };
   const ler = () => { try { Object.assign(S, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {} try { Object.assign(cfg, JSON.parse(localStorage.getItem(CFG) || '{}')); } catch (e) {} };
   const gday = (d = new Date()) => new Date(d.getTime() - RESET_H * 3600e3);
@@ -70,7 +71,7 @@
     const sh = proximo(0), di = proximo(30), rs = proxReset(), m = new Date().getMinutes();
     const ev = [];
     if (sh <= 5 * 60e3 || m < 6) ev.push({ k: 'shugo', img: 'shugo.webp', t: 'Shugo Festival', b: m < 6 ? 'AGORA' : Math.ceil(sh / 60e3) + ' min', d: m < 6 ? 'está acontecendo, entre agora' : 'começa em ' + mmss(sh) });
-    if (di <= 5 * 60e3 || (m >= 30 && m < 35)) ev.push({ k: 'dimi', img: 'fenda.webp', t: 'Dimensional Invasion', b: (m >= 30 && m < 35) ? 'AGORA' : Math.ceil(di / 60e3) + ' min', d: (m >= 30 && m < 35) ? 'está acontecendo' : 'começa em ' + mmss(di) });
+    if (DI_ON && (di <= 5 * 60e3 || (m >= 30 && m < 35))) ev.push({ k: 'dimi', img: 'fenda.webp', t: 'Dimensional Invasion', b: (m >= 30 && m < 35) ? 'AGORA' : Math.ceil(di / 60e3) + ' min', d: (m >= 30 && m < 35) ? 'está acontecendo' : 'começa em ' + mmss(di) });
     if (rs <= 30 * 60e3 && faltam()) ev.push({ k: 'reset', t: 'Reset diário', b: Math.ceil(rs / 60e3) + ' min', d: 'em ' + mmss(rs) + '. Faltam ' + faltam() + ' tarefas' });
     return { sh, di, rs, ev };
   };
@@ -93,7 +94,7 @@
     let h = '<h4>Hoje no jogo <small>reseta em ' + mmss(e.rs).replace(/^(\d+):(\d+)$/, '$1 min') + '</small></h4>';
     const hr = ms => { const m = Math.floor(ms / 60e3); return m >= 60 ? Math.floor(m / 60) + ' h ' + dois(m % 60) + ' min' : m + ' min'; };
     h = h.replace(/reseta em .*?<\/small>/, 'reseta em ' + hr(e.rs) + '</small>');
-    h += '<div class="avE"><div class="' + (e.ev.some(x => x.k === 'shugo') ? 'go' : '') + '"><img src="' + SRC + 'aviso/shugo.webp" alt=""><span>Shugo Festival<b data-t="sh">' + mmss(e.sh) + '</b></span></div><div class="' + (e.ev.some(x => x.k === 'dimi') ? 'go' : '') + '"><img src="' + SRC + 'aviso/fenda.webp" alt=""><span>Dimensional Inv.<b data-t="di">' + mmss(e.di) + '</b></span></div></div>';
+    h += '<div class="avE"><div class="' + (e.ev.some(x => x.k === 'shugo') ? 'go' : '') + '"><img src="' + SRC + 'aviso/shugo.webp" alt=""><span>Shugo Festival<b data-t="sh">' + mmss(e.sh) + '</b></span></div><div class="' + (e.ev.some(x => x.k === 'dimi') ? 'go' : '') + '"><img src="' + SRC + 'aviso/fenda.webp" alt=""><span>Dimensional Inv.<b data-t="di">' + mmss(e.di) + '</b><small style="display:block;font-size:10px;color:#9298a8">horário não confirmado</small></span></div></div>';
     if (naTarefas) h += '<div style="font-size:13px;color:#9298a8;padding:4px 2px">Marque as tarefas na própria página.</div>';
     else { h += '<div class="avL">'; itens().forEach(i => { const n = i.n || 1, v = S.daily[i.id] || 0, ok = v >= n;
       h += '<label data-i="' + i.id + '"><input type="checkbox"' + (ok ? ' checked' : '') + '><span class="' + (ok ? 'ok' : '') + '">' + i.t + '</span>' + (n > 1 ? '<span class="c"><button type="button" data-m="-1" aria-label="Menos">−</button>' + v + '/' + n + '<button type="button" data-m="1" aria-label="Mais">+</button></span>' : '') + '</label>'; });
